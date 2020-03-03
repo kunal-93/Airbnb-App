@@ -1,0 +1,76 @@
+{{!-- 
+    Must do:
+    1. define an action and method attribute inside of your form
+    2. give every form control a name
+    3. Make sure you have submit button
+
+ --}}
+{{!-- {{#each errorMessages}}
+    <div>{{this}}</div>
+{{/each}} --}}
+
+ {{!-- This form is a url encoded form --}}
+<div class="hero-image">
+    <form method="POST" action="/registration" class="form">
+        <div>
+            {{#if errorMessages.invalidMail}}
+                <div class="tooltip">
+                    <span class="material-icons">error</span>
+                    <span class="tooltiptext">{{errorMessages.invalidMail}}</span>
+                </div>
+            {{/if}}
+            <input type="text" name="email" placeholder="Email Address" value={{userData.email}}>*
+        </div>
+        <div>
+            {{#if errorMessages.invalidFirstName}}
+                <div class="tooltip">
+                    <span class="material-icons">error</span>
+                    <span class="tooltiptext">{{errorMessages.invalidFirstName}}</span>
+                </div>
+            {{/if}}
+            <input type="text" name="firstName" placeholder="First Name" value={{userData.firstName}}>*
+        </div>
+        <div>
+            {{#if errorMessages.invalidLastName}}
+                <div class="tooltip">
+                    <span class="material-icons">error</span>
+                    <span class="tooltiptext">{{errorMessages.invalidLastName}}</span>
+                </div>
+            {{/if}}
+            <input type="text" name="lastName" placeholder="Last Name" value={{userData.lastName}}>*   
+        </div>
+        <div>
+            {{#if errorMessages.invalidPhoneNo}}
+                <div class="tooltip">
+                    <span class="material-icons">error</span>
+                    <span class="tooltiptext">{{errorMessages.invalidPhoneNo}}</span>
+                </div>
+            {{/if}}
+            <input type="number" name="phoneNo" placeholder="Phone Number" value={{userData.phoneNo}}>*   
+        </div>
+        <div>
+            {{#if errorMessages.invalidPassword}}
+                <div class="tooltip">
+                    <span class="material-icons">error</span>
+                    <span class="tooltiptext">{{errorMessages.invalidPassword}}</span>
+                </div>
+            {{/if}}
+            <input type="password" name="password" placeholder="create a password" value={{userData.password}}>*
+        </div>
+        <div>
+            {{#if errorMessages.passwordsDontMatch}}
+                <div class="tooltip">
+                    <span class="material-icons">error</span>
+                    <span class="tooltiptext">{{errorMessages.passwordsDontMatch}}</span>
+                </div>
+            {{/if}}
+            <input type="password" name="verifyPassword" placeholder="re-enter password" value={{userData.verifyPassword}}>*
+        </div>
+        <div class="registration-dob">
+            <h7>Date of Birth</h7>
+            <input type="date" name="DOB" placeholder="dd-mm-yy">
+        </div>
+
+        <input type="submit" value="Register" class="button">
+    </form>
+</div>

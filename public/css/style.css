@@ -1,0 +1,306 @@
+*{
+    list-style-type: none;
+    text-decoration: none;
+    margin: 0;
+}
+
+h1,h2,h3,h4,h5,h6,h7{
+    margin-right: .5em;
+}
+body{
+    font-size: 1em;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.hero-image{
+    position: relative;
+    background-image: url("../img/mainBG.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 75vh;
+}
+
+.promotion{
+    text-align: center;
+    font-weight: bold;
+    text-decoration: underline;
+}
+.promotion img{
+    width: 100%;
+}
+
+.promotion p{
+    position: relative;
+    top: 8em;
+    font-size: 1.5em;
+    /* bottom: -2em; */
+    z-index: 20;
+    /* margin: 0; */
+}
+
+.logo{
+    width: 4em;
+    display: inline-block;
+    padding: 1em;
+}
+.header{
+    background-image: linear-gradient(to top, rgb(231, 40, 81), rgb(224, 94, 122));
+    position: sticky;
+    box-sizing: border-box;
+    width: 100%;
+    z-index: 10;
+    display: grid;
+    /* padding:1em; */
+    grid-template-columns: 1fr 3fr;
+    justify-content: space-around;
+    font-size: .9em;
+}
+.header nav{
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.nav{
+    display: flex;
+    justify-content: flex-end;
+    
+}
+.nav > li{
+    margin: 0 1em;
+}
+.nav a{
+    color: white;
+    display: inline-block;
+    padding-bottom: .5em;
+    box-sizing: border-box;
+}
+.nav a:hover{
+    border-bottom: solid white;
+}
+.button{
+    background-image: linear-gradient(to top, rgb(231, 40, 81), rgb(224, 94, 122));
+    color: white;
+    border-width: 0;
+    font-size: 1.2em; 
+    border-radius: .5em;
+    padding: .5em;
+}
+
+/* refered from https://www.w3schools.com/css/css_tooltip.asp */
+.tooltip {
+    position: relative;
+    display: inline-block;
+    color: red;
+  }
+  
+.tooltip .tooltiptext {
+    font-size: .7em;
+    visibility: hidden;
+    width: 10rem;
+    border: .1rem solid red;
+    background-color:white;
+    color: black;
+    text-align: center;
+    border-radius: .5rem;
+    padding: 2px;
+    margin: .1rem;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+  
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}
+
+.city-select-container{
+    display: flex;
+    justify-content: space-between;
+}
+
+.form{
+    position: relative;
+    top: 2em;
+    background-color: whitesmoke;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 80%;
+    display: grid;
+    row-gap: 1em;
+    font-size: 1.2em;
+    padding: 1em;
+    border-radius: .5em;
+    box-shadow: .2em .2em 2em grey;
+}
+
+.form > div {
+    display: flex;
+}
+.form > div > input{
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: .5em;
+    border-width: .05em;
+    height: 2.5em;
+    padding: .1em 1em;
+    /* margin: 0 .5em; */
+}
+
+.registration-dob{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.registration-dob input{
+    box-sizing: border-box;
+    border-radius: .5em;
+    border-width: .05em;
+    height: 2.5em;
+    padding: .1em 1em;
+    margin: .5em .5em;
+}
+.check-in-check-out{
+    display: flex;
+    /* grid-template-columns: 1fr 1fr; */
+    justify-content: space-between;
+}
+.check-in-check-out input{
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: .5em;
+    border-width: .05em;
+    height: 2.5em;
+    padding: .1em .5em;
+    margin: .5em 0;
+}
+
+.information-div{
+    display: grid;
+    margin:1em;
+    padding: 1em;
+    gap: 1em;
+    
+}
+
+.information-div li {
+    /* box-shadow: .2em .2em 2em grey; */
+    /* border-bottom: .02em solid grey; */
+}
+
+.information-div-video{
+    width: 100%;
+}
+.information-heading{
+    text-align: center;
+    margin: 1em;
+    font-size: 2em;
+}
+
+.information-div h3{
+    text-align: center;
+    margin: 1em;
+}
+
+.footer{
+    display: grid;
+    color: white;
+    text-align: center;
+    padding: 1em;
+    gap: 1em;
+    background-image: linear-gradient(to top, rgb(231, 40, 81), rgb(224, 94, 122));
+}
+
+.footer-socials a{
+    color:white;
+}
+.footer-socials{
+    display: flex;
+    font-size: 2em;
+    justify-content: space-evenly;
+    vertical-align: middle;
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.footer-info{
+    display: grid;
+    gap: .5em;
+}
+
+.roomListing-section{
+    display: grid;
+    row-gap: 2em;
+}
+
+.room{
+    display: grid;
+    text-align: left;
+    align-items: center;
+    row-gap: .5em;
+    border-bottom: .01em solid grey;
+    padding: 1em;
+    /* margin: 1em; */
+}
+
+.room-image-container{
+    text-align:center;
+}
+.room-image{
+    /* max-height: 20vh; */
+    max-width: 100%;
+    /* margin: .5em; */
+    
+}
+
+.room-ratings{
+    display: flex;
+    justify-content: flex-start;
+    
+}
+
+.room-ratings > span{
+    margin-right: .5em;
+    align-content: center;
+}
+
+.featured-rooms-heading{
+    text-align: center;
+    margin: 1em;
+}
+@media(min-width:48em){
+    .form{
+        max-width: 60%;
+    }
+    .logo{
+        width: 8em;
+    }
+    .roomListing-section{
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .header{
+        font-size: 1em;
+    }
+    .footer{
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    .promotion p{
+        top: 13em;
+    }
+}
+@media(min-width:75em){
+    .hero-image{
+        height: 100vh;
+    }
+    .form{
+        max-width: 30%;
+    }
+    .roomListing-section{
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .information-div{
+        grid-template-columns: repeat(2,1fr);
+    }
+    .promotion p{
+        top: 17em;
+        font-size: 2.5em;
+    }
+}
+

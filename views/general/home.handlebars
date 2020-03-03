@@ -1,0 +1,95 @@
+<div class="hero-image">
+    <form method="POST" action="/rooms/listing" class="form">
+        <h2>Book unique places to stay and things to do.</h2>
+        
+        <div class="city-select-container">
+            <h3>Where in Canada</h3>
+            <div>
+                <select name="location" value={{userData.location}}>
+                    <option value="Toronto">Toronto</option>
+                    <option value="Vancouver">Vancouver</option>
+                    <option value="Ottawa">Ottawa</option>
+                    <option value="Montreal">Montreal</option>
+                    <option value="London">Montreal</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="check-in-check-out">
+            {{#if errorMessages.invalidCheckInCheckOut}}
+                <div class="tooltip">
+                    <span class="material-icons">error</span>
+                    <span class="tooltiptext">{{errorMessages.invalidCheckInCheckOut}}</span>
+                </div>
+            {{/if}}
+            <div>
+                <h7>Check-In</h7>
+                <input type="date" name="checkIn" value={{userData.checkIn }}>
+            </div>
+            <div>
+                <h7>Check-Out</h7>
+                <input type="date" name="checkOut" value={{userData.checkOut}}> 
+            </div>
+        </div>
+    
+        <div>
+            {{#if errorMessages.invalidGuests}}
+                <div class="tooltip">
+                    <span class="material-icons">error</span>
+                    <span class="tooltiptext">{{errorMessages.invalidGuests}}</span>
+                </div>
+            {{/if}}
+            <h7>Guests</h7>
+            <input type="number" name="guestCount" placeholder="Number of Guests" min="1"  value={{userData.guestCount}}> 
+        </div>
+        
+        <input type="submit" value="Search" class="button">
+    </form>
+</div>
+
+<div>
+    <h2 class="featured-rooms-heading">Featured Rooms</h2>
+    <div class="roomListing-section">
+        {{#each featuredRooms}}
+            <article class="room">
+                <header class="bottom-border">
+                    <div class="room-image-container"><img class="room-image" src={{this.imagePath}} alt="Product Image"><div>
+                </header>
+                <p>{{this.location}}</p>
+                <h3>{{this.name}}</h3>
+                <p>{{this.description}}</p>
+                <p>${{this.price}} CAD/night</p>     
+            </article>
+        {{/each}}
+    </div>
+</div>
+
+<div class="promotion">
+    <p><a href="#">Book Now</a></p>
+    <img src="img/promotion.jpg" alt="Promotion"> 
+</div>
+
+<div>
+    <h2 class="information-heading">Why AirBnB</h2>
+    <ul class="information-div">
+        <li>
+            <iframe width="100%" src="https://www.youtube.com/embed/cyWZC06z4qU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </li>
+        <li>
+            <h3>SPECIALIZED TOURS</h3>
+            <p>Experiences taps Airbnb’s community to offer the kinds of highly curated adventures that were once the exclusive domain of premium travel agents, such as a three-night sake tasting in Tokyo led by a sommelier ($177) and a dip into Paris’s African fashion culture ($60).</p>
+        </li>
+        <li>
+            <h3>ARMCHAIR INSPIRATION</h3>
+            <p>Occupying their own section within Airbnb’s new app, the Experiences listings are elegant, browsable, and highly visual—like a luxe travel magazine. They’re also extremely easy to book.</p>
+        </li>
+        <li>
+            <h3>TRIPS, NOT TOOLS</h3>
+            <p>Airbnb is moving closer to handling users’ entire travel experience. A deal with the app Resy integrates restaurant reservations, and app users can download more than 100 guidebooks. Soon, it may add flight booking. “Can we build out the best trip?” Zadeh asks. “Ultimately that’s what creates a service people love.”</p>
+        </li>
+    </ul>
+    
+    <div>
+
+    </div>
+</div>
