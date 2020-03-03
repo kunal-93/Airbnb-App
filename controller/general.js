@@ -4,12 +4,12 @@ const router = express.Router()
 //Functional Imports
 const UserRegistration = require("./registration.js");
 const LoginValidation = require("./login.js");
-const featuredRoomListing = require("../models/rooms/featuredRooms")
+const RoomListing = require("../models/rooms/roomListing");
 
 router.get('/', (req, res) => {
     res.render('general/home', {
         title: "Home-AirBnB",
-        featuredRooms: featuredRoomListing.getAllRooms()
+        featuredRooms: RoomListing.getFeaturedRooms()
     });
 });
 

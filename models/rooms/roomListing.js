@@ -1,6 +1,7 @@
 const rooms = {
     
     roomListing :  [],
+    featuredRooms : [],
 
     init(){ 
     
@@ -12,7 +13,8 @@ const rooms = {
                 "description" : "Spacious Luxury room for family vacation. 4 guests . 2 bedrooms . 1 kitchen . 2 bath",
                 "price" : 130,
                 "rating": 4.7,
-                "ratingsCount": 342
+                "ratingsCount": 342,
+                "featured": true
             },
             {
                 "id" : 2,
@@ -21,7 +23,8 @@ const rooms = {
                 "description" : "Clean, cozy condo. 3 guests . 1 bedroom . 1 kitchen . 1 bath",
                 "price" : 150,
                 "rating": 4.5,
-                "ratingsCount": 222
+                "ratingsCount": 222,
+                "featured": true
             },
             {
                 "id" : 3,
@@ -30,7 +33,8 @@ const rooms = {
                 "description" : "Entire apartment hosted by Paige. 4 guests . 1 bedroom . 1 kitchen . 1 bath",
                 "price" : 170,
                 "rating": 4.2,
-                "ratingsCount": 213
+                "ratingsCount": 213,
+                "featured": true
             },
             {
                 "id" : 4,
@@ -39,7 +43,8 @@ const rooms = {
                 "description" : "Spacious Luxury room for couples. 2 guests . 1 bedroom . 1 kitchen . 1 bath",
                 "price" : 120,
                 "rating": 3.9,
-                "ratingsCount": 263
+                "ratingsCount": 263,
+                "featured": false
             },
             {
                 "id" : 5,
@@ -48,7 +53,8 @@ const rooms = {
                 "description" : "Spacious Luxury room for family vacation. 4 guests . 2 bedroom . 1 kitchen . 2 bath",
                 "price" : 95,
                 "rating": 4.0,
-                "ratingsCount": 112
+                "ratingsCount": 112,
+                "featured": false
             },
             {
                 "id" : 6,
@@ -57,17 +63,25 @@ const rooms = {
                 "description" : "Spacious Luxury room for family vacation. 3 guests . 1 bedroom . 1 kitchen . 1 bath",
                 "price" : 117,
                 "rating": 3.5,
-                "ratingsCount": 362
+                "ratingsCount": 362,
+                "featured": false
             }
         ]
 
         allRooms.forEach(room =>  {
             this.roomListing.push(room);
+            if(room.featured)
+                this.featuredRooms.push(room);
         });
+
     },
     
     getAllRooms(){
         return this.roomListing;
+    },
+
+    getFeaturedRooms(){
+        return this.featuredRooms;
     }
 }
 
