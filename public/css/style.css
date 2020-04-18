@@ -28,6 +28,10 @@ body{
     width: 100%;
 }
 
+.hidden {
+    display: none;
+}
+
 .promotion p{
     position: relative;
     top: 8em;
