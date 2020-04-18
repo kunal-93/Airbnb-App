@@ -11,7 +11,7 @@
 
  {{!-- This form is a url encoded form --}}
 <div class="hero-image">
-    <form method="POST" action="/registration" class="form">
+    <form method="POST" action="/user/registration" class="form">
         <div>
             {{#if errorMessages.invalidMail}}
                 <div class="tooltip">
@@ -70,7 +70,9 @@
             <h7>Date of Birth</h7>
             <input type="date" name="DOB" placeholder="dd-mm-yy">
         </div>
-
+        {{#if errorMessages.UnexpectedErrors}}
+            <div class="tooltip">{{errorMessages.UnexpectedErrors}}</div>
+        {{/if}}
         <input type="submit" value="Register" class="button">
     </form>
 </div>

@@ -4,9 +4,11 @@ const sgMail = require('@sendgrid/mail');
 
 const client = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
 
+const userModel = require('../models/User');
+
 const registration = {
 
-    sendMessage(name, res){
+    sendMessage(name){
 
     client.messages
     .create({
@@ -15,15 +17,14 @@ const registration = {
         to: '+16479983500'
     })
     .then(()=>{
-        res.redirect("/dashboard")
     })
     .catch((err) => {
-        //console.log(`Error while sending Message: ${err}`);
+        console.log(`Error while sending Message: ${err}`);
     });
         
     },
 
-    sendEmail(name, email, res){
+    sendEmail(name, email){
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
         const msg = {
         to: `${email}`,
@@ -37,10 +38,9 @@ const registration = {
         
         sgMail.send(msg)
         .then(() => {
-            res.redirect("/dashboard")
         })
         .catch((err) => {
-            //console.log(`Error while sending email: ${err}`);
+            console.log(`Error while sending email: ${err}`);
         });
     },
 
@@ -56,6 +56,32 @@ const registration = {
     validateName(name){
         const re = /[a-zA-z]$/;
         return re.test(name);
+    },
+
+    storeData(user, res){
+        const newUserInfo = {
+            FirstName : user.firstName,
+            LastName : user.lastName,
+            Email : user.email,
+            Password: user.password,
+            Mobile: user.phoneNo
+        }
+
+        const newUser = new userModel(newUserInfo);
+        
+        newUser.save()
+        .then(()=>{
+            this.sendEmail(user.firstName, user.email, res);
+            this.sendMessage(user.firstName, res);
+            res.redirect("/user/dashboard")
+        })
+        .catch(err => {
+            const errors = {UnexpectedErrors : "Account already exists, Matched Fields\n" + JSON.stringify(err.keyValue)}
+            res.render("general/registration", {
+                errorMessages : errors,
+                userData: user
+            });
+        }) 
     },
 
     userValidation(req, res){
@@ -105,8 +131,7 @@ const registration = {
             });
         }
         else{
-            this.sendEmail(req.body.firstName, req.body.email, res);
-            this.sendMessage(req.body.firstName, res);
+            this.storeData(req.body, res);
         }
     }
 }
