@@ -1,8 +1,43 @@
+const userModel = require("../models/User");
+const bcrypt = require("bcryptjs");
+
 // referred from  - https://stackoverflow.com/questions/46155/how-to-validate-an-email-address-in-javascript
 
 const validateEmail = (email) => {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
+}
+
+const userAuthentication = (req, res) => {
+    const errors = {}
+
+    userModel.findOne({Email: req.body.email})
+    .then(user => {
+        if(user == null){
+            errors.authenticationErrors = "Email and/or password does not match";
+            res.render('general/login', {
+                errorMessages: errors
+            });
+        }
+        else{
+            bcrypt.compare(req.body.password, user.Password)
+            .then(isMatched => {
+                if(isMatched){
+                    req.session.userInfo = user;
+                    // console.log(req.session.userInfo);
+                    res.redirect('/user/dashboard');
+                }
+                else{
+                    errors.authenticationErrors = "Email and/or password does not match"
+                    res.render('general/login', {
+                        errorMessages: errors
+                    });
+                }
+            })
+            .catch(err => console.log(err));
+        }
+    })
+    .catch(err => console.log(err));
 }
 
 function loginValidation(req, res){
@@ -27,7 +62,7 @@ function loginValidation(req, res){
         });
     }
     else{
-        res.render("general/dashboard");
+        userAuthentication(req, res);
     }
 }
 

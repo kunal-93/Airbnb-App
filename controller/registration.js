@@ -73,7 +73,7 @@ const registration = {
         .then(()=>{
             this.sendEmail(user.firstName, user.email, res);
             this.sendMessage(user.firstName, res);
-            res.redirect("/user/dashboard")
+            res.redirect("/user/login");
         })
         .catch(err => {
             const errors = {UnexpectedErrors : "Account already exists, Matched Fields\n" + JSON.stringify(err.keyValue)}

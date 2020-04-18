@@ -22,12 +22,18 @@ router.post("/login", (req, res) =>{
     LoginValidation.loginValidation(req, res);
 });
 
+router.get("/logout", (req, res) => {
+    req.session.destroy();
+    res.redirect('user/login');
+})
+
 router.get("/dashboard", (req, res) =>{
     res.render("general/dashboard", {
         title: "Dashboard-AirBnB",
         featuredRooms: RoomListing.getAllRooms()
     });
 });
+
 
 // router.get("/profile/",(req,res)=>{
 

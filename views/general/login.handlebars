@@ -1,5 +1,5 @@
 <div class="hero-image">
-    <form method="POST" action="/login" class="form">
+    <form method="POST" action="/user/login" class="form">
         <div>
             {{#if errorMessages.invalidMail}}
                 <div class="tooltip">
@@ -18,6 +18,9 @@
             {{/if}}
             <input type="password" name="password" placeholder="password">
         </div>
+        {{#if errorMessages.authenticationErrors}}
+            <div class="tooltip">{{errorMessages.authenticationErrors}}</div>
+        {{/if}}
         <input type="submit" value="Sign In" class="button">
     </form>
 </div>
