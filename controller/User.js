@@ -28,10 +28,20 @@ router.get("/logout", (req, res) => {
 })
 
 router.get("/dashboard", (req, res) =>{
-    res.render("general/dashboard", {
-        title: "Dashboard-AirBnB",
-        featuredRooms: RoomListing.getAllRooms()
-    });
+    // console.log(RoomListing.getAllRooms());
+
+    if(req.session.userInfo.isAdmin){
+        res.render("general/adminDashboard", {
+            title: "Admin Dashboard-AirBnB",
+            Rooms: RoomListing.getAllRooms()
+        });
+    }
+    else{
+        res.render("general/dashboard", {
+            title: "Dashboard-AirBnB",
+            Rooms: RoomListing.getAllRooms()
+        });
+    }
 });
 
 

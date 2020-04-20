@@ -19,6 +19,9 @@ body{
     height: 75vh;
 }
 
+div{
+    padding: .2em;
+}
 .promotion{
     text-align: center;
     font-weight: bold;
@@ -88,6 +91,14 @@ body{
     padding: .5em;
 }
 
+.adminHeader{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+.adminOptions{
+    display: flex;
+    justify-content: space-evenly;
+}
 /* refered from https://www.w3schools.com/css/css_tooltip.asp */
 .tooltip {
     position: relative;

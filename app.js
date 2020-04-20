@@ -16,8 +16,37 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.engine('handlebars', exphbs());
+//HandleBars middlewares
 app.set('view engine', 'handlebars');
+
+app.engine('handlebars', exphbs(
+    {
+        helpers:{
+            if_eq : function(a, b){
+                const res =  a.localeCompare(b);
+                if(res == 0)
+                    return "selected";
+            },
+            if_checked: function(a){
+                if(a == true)
+                    return "checked";
+            }
+        }
+    }
+));
+
+app.use((req, res, next) => {
+
+    if(req.query.method == "PUT"){
+        req.method="PUT";
+    }
+    else if(req.query.method == "DEL"){
+        req.method="DELETE";
+    }
+    
+    next();
+});
+
 
 
 

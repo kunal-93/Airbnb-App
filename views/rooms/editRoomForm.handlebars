@@ -1,0 +1,52 @@
+<div>
+    <form method="POST" action="/rooms/update/{{roomData.id}}?method=PUT" class="form">
+        <div>
+            {{#if errorMessages.invalidTitle}}
+                <div class="tooltip">
+                    <span class="material-icons">error</span>
+                    <span class="tooltiptext">{{errorMessages.invalidTitle}}</span>
+                </div>
+            {{/if}}
+            <h7>Title</h7>
+            <input type="text" name="title" placeholder="Room Name" value={{roomData.title}}> 
+        </div>
+        <div>
+            {{#if errorMessages.invalidRoomDescription}}
+                <div class="tooltip">
+                    <span class="material-icons">error</span>
+                    <span class="tooltiptext">{{errorMessages.invalidRoomDescription}}</span>
+                </div>
+            {{/if}}
+            <h7>Description</h7>
+            <textarea name="description" >{{roomData.description}}</textarea>
+        </div>
+
+        <div>
+            <h7>Featured Room</h7>
+            <input type="checkbox" name="isFeatured" {{#if_checked roomData.featured}} {{/if_checked}}>
+        </div>
+
+        <div>
+            <h7>Price/night</h7>
+            <input min="1" type="number" name="price" value={{roomData.price}} placeholder="Price">
+        </div>
+
+        <div class="city-select-container">
+            <h3>Location</h3>
+            <div>
+                <select name="location">
+                    <option value="Toronto" {{#if_eq roomData.location "Toronto"}}  {{/if_eq}}>Toronto</option>
+                    <option value="Vancouver" {{#if_eq roomData.location "Vancouver"}}  {{/if_eq}}>Vancouver</option>
+                    <option value="Ottawa" {{#if_eq roomData.location "Ottawa"}}  {{/if_eq}}>Ottawa</option>
+                    <option value="Montreal" {{#if_eq roomData.location "Montreal"}}  {{/if_eq}}>Montreal</option>
+                    <option value="London" {{#if_eq roomData.location "London"}} {{/if_eq}}>London</option>
+                </select>
+            </div>
+        </div>
+
+        {{#if errorMessages.UnexpectedErrors}}
+            <div class="tooltip">{{errorMessages.UnexpectedErrors}}</div>
+        {{/if}}
+        <input type="submit" value="Edit" class="button">
+    </form>
+</div>
