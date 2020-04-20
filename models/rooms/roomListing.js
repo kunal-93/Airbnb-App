@@ -12,6 +12,7 @@ const rooms = {
                 return {
                     id: room._id,
                     title : room.title,
+                    imagePath: `/uploads/${room.image}`,
                     description : room.description,
                     price: room.price,
                     location : room.location,

@@ -3,11 +3,14 @@ const exphbs  = require('express-handlebars');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const fileUpload = require('express-fileupload');
 
 require('dotenv').config({path:"./config/keys.env"})
 
 const app = express();
 const port = process.env.PORT;
+
+app.use(fileUpload());
 
 app.use(express.static("public"));
 // parse application/x-www-form-urlencoded
@@ -43,7 +46,6 @@ app.use((req, res, next) => {
     else if(req.query.method == "DEL"){
         req.method="DELETE";
     }
-    
     next();
 });
 

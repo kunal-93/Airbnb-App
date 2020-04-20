@@ -29,17 +29,17 @@ router.get("/logout", (req, res) => {
 
 router.get("/dashboard", (req, res) =>{
     // console.log(RoomListing.getAllRooms());
-
+    const roomsData = RoomListing.getAllRooms();
     if(req.session.userInfo.isAdmin){
         res.render("general/adminDashboard", {
             title: "Admin Dashboard-AirBnB",
-            Rooms: RoomListing.getAllRooms()
+            Rooms: roomsData
         });
     }
     else{
         res.render("general/dashboard", {
             title: "Dashboard-AirBnB",
-            Rooms: RoomListing.getAllRooms()
+            Rooms: roomsData
         });
     }
 });

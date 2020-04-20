@@ -15,7 +15,7 @@
 
 {{#if adminAction.addRoom}}
     <div>
-        <form method="POST" action="/rooms/addRoom" class="form">
+        <form method="POST" action="/rooms/addRoom" class="form" enctype="multipart/form-data">
             <div>
                 {{#if errorMessages.invalidTitle}}
                     <div class="tooltip">
@@ -59,7 +59,10 @@
                     </select>
                 </div>
             </div>
-
+            <div>
+                <h3>Upload Image</h3>
+                <input type="file" name="image">
+            </div>
             {{#if errorMessages.UnexpectedErrors}}
                 <div class="tooltip">{{errorMessages.UnexpectedErrors}}</div>
             {{/if}}
@@ -73,20 +76,16 @@
     <div class="roomListing-section">
         {{#each Rooms}}
             <article class="room">
-                {{!-- <header class="bottom-border">
+                <header class="bottom-border">
                     <div class="room-image-container"><img class="room-image" src={{this.imagePath}} alt="Product Image"><div>
-                </header> --}}
+                </header>
                 <p>{{this.location}}</p>
                 <h3>{{this.title}}</h3>
                 <p>{{this.description}}</p>
                 <p>${{this.price}} CAD/night</p>     
-            </article>
-            <div>
                 <a href="/rooms/edit/{{this.id}}" class="button">Edit Room</a>
-            </div>
-            <div>
-                <a href="/rooms/delete/{{this.id}}" class="button">Delete Room</a>
-            </div>
+                <a href="/rooms/delete/{{this.id}}?method=DEL" class="button">Delete Room</a>
+            </article>
         {{/each}}
     </div>
 </div>

@@ -69,7 +69,13 @@ router.put('/update/:id', (req, res) => {
     .catch(err=>console.log(`Error while updating ${err}`))
 })
 
-router.put('/delete/:id', (req, res) => {
+router.delete('/delete/:id', (req, res) => {
+
+    roomModel.deleteOne({_id: req.params.id})
+    .then(()=>{
+        res.redirect("/user/dashboard");
+    })
+    .catch(err=>console.log(`Error while deleting ${err}`));
     
 })
 

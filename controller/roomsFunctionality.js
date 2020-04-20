@@ -1,5 +1,6 @@
 const RoomListing = require("../models/rooms/roomListing");
 const roomModel = require("../models/Room");
+const path = require("path");
 
 const validateRoom = roomData =>{
     const errors = {}
@@ -28,13 +29,15 @@ const addRoom = (req, res) => {
         });
     }
     else{
-        saveRoom(roomData, res);
+        saveRoom(req, res);
     }
 }
 
-const saveRoom = (room, res) => {
+const saveRoom = (req, res) => {
+    const room = req.body;
     const newRoomInfo = {
         title : room.title,
+        image: "default",
         description : room.description,
         price: room.price,
         location : room.location,
@@ -45,12 +48,26 @@ const saveRoom = (room, res) => {
     const newRoom = new roomModel(newRoomInfo);
     
     newRoom.save()
-    .then(()=>{
-        res.render("general/adminDashboard", {
-            userData: room,
-            Rooms: RoomListing.getAllRooms(),
-            addSuccessful: true
-        });
+    .then((room)=>{
+        req.files.image.name = `mainImage_${room._id}_${path.parse(req.files.image.name).ext}`;
+        req.files.image.mv(`public/uploads/${req.files.image.name}`)
+        .then(() => {
+
+            roomModel.updateOne({_id: room._id}, {
+                image: req.files.image.name
+            })
+            .then(()=>{
+                res.render("general/adminDashboard", {
+                    userData: room,
+                    Rooms: RoomListing.getAllRooms(),
+                    addSuccessful: true
+                });
+            })
+            .catch(err => console.log(`Unable to update Image path ${err}`))
+        })
+        .catch(err => console.log(`Error uploading Image ${err}`));
+
+        
     })
     .catch(err => {
         const errors = {UnexpectedErrors : "Error while saving " + err}
