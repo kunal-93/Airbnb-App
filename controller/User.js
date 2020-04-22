@@ -3,9 +3,10 @@ const express = require('express')
 const router = express.Router();
 
 //Functional Imports
-const RoomListing = require("../models/rooms/roomListing");
+const RoomListing = require("./roomListing");
 const UserRegistration = require("./registration.js");
 const LoginValidation = require("./login.js");
+const {isAuthenticated} = require("./middleware/auth");
 
 router.get("/registration", (req, res) =>{
     res.render("general/registration", {title: "Registration-AirBnB"});
@@ -27,19 +28,22 @@ router.get("/logout", (req, res) => {
     res.redirect('login');
 })
 
-router.get("/dashboard", (req, res) =>{
+router.get("/dashboard", isAuthenticated, (req, res) =>{
     // console.log(RoomListing.getAllRooms());
     const roomsData = RoomListing.getAllRooms();
     if(req.session.userInfo.isAdmin){
         res.render("general/adminDashboard", {
             title: "Admin Dashboard-AirBnB",
-            Rooms: roomsData
+            roomList: roomsData,
+            location: "All",
+            admin: true
         });
     }
     else{
         res.render("general/dashboard", {
             title: "Dashboard-AirBnB",
-            Rooms: roomsData
+            roomList: roomsData,
+            location: "All"
         });
     }
 });

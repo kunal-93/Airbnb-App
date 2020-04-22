@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 //Functional Imports
-const RoomListing = require("../models/rooms/roomListing");
+const RoomListing = require("./roomListing");
 
 router.get('/', (req, res) => {
     res.render('general/home', {
@@ -10,7 +10,5 @@ router.get('/', (req, res) => {
         featuredRooms: RoomListing.getFeaturedRooms()
     });
 });
-
-
 
 module.exports = router;

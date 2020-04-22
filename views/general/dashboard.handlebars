@@ -1,6 +1,6 @@
 <div class="hero-image">
     <form method="POST" action="/rooms/listing" class="form">
-        <h2>Welcome {{user.FirstName}}, Book your first room to get 70% discount</h2>
+        <h2>Hey {{user.FirstName}}, Book your first room to get 70% discount</h2>
         
         <div class="city-select-container">
             <h3>Where in Canada</h3>
@@ -9,8 +9,6 @@
                     <option value="Toronto">Toronto</option>
                     <option value="Vancouver">Vancouver</option>
                     <option value="Ottawa">Ottawa</option>
-                    <option value="Montreal">Montreal</option>
-                    <option value="London">London</option>
                 </select>
             </div>
         </div>
@@ -47,19 +45,4 @@
     </form>
 </div>
 
-<div>
-    <h2 class="featured-rooms-heading">Best rooms suggestions for you</h2>
-    <div class="roomListing-section">
-        {{#each featuredRooms}}
-            <article class="room">
-                <header class="bottom-border">
-                    <div class="room-image-container"><img class="room-image" src={{this.imagePath}} alt="Product Image"><div>
-                </header>
-                <p>{{this.location}}</p>
-                <h3>{{this.name}}</h3>
-                <p>{{this.description}}</p>
-                <p>${{this.price}} CAD/night</p>     
-            </article>
-        {{/each}}
-    </div>
-</div>
+{{> roomListing}}

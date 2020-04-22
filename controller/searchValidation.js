@@ -1,4 +1,4 @@
-const rooms = require('../models/rooms/roomListing');
+const rooms = require('./roomListing');
 
 function searchValidation(req, res){
 
@@ -39,12 +39,11 @@ function searchValidation(req, res){
         });
     }
     else{
-        rooms.getAllRooms().forEach(room => {
-            room.location = req.body.location;
-        });
-        res.render("rooms/roomListing", {
-            roomList : rooms.getAllRooms()
-        });
+        // res.redirect(`/rooms/listing?location=${req.body.location}`);
+        rooms.getRoomsByLocation(req, res)
+        // res.render("rooms/roomListing", {
+        //     roomList : rooms.roomsByLocation
+        // });
     }
 }
 

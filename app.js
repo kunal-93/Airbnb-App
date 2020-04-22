@@ -26,9 +26,11 @@ app.engine('handlebars', exphbs(
     {
         helpers:{
             if_eq : function(a, b){
-                const res =  a.localeCompare(b);
-                if(res == 0)
-                    return "selected";
+                if(a !=null){
+                    const res =  a.localeCompare(b);
+                    if(res == 0)
+                        return "selected";
+                }
             },
             if_checked: function(a){
                 if(a == true)
@@ -48,9 +50,6 @@ app.use((req, res, next) => {
     }
     next();
 });
-
-
-
 
 app.use(session({
     secret: `${process.env.SECRET_KEY}`,

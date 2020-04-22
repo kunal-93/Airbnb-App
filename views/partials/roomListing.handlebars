@@ -1,0 +1,50 @@
+<div class="city-select-container">
+    <form method="POST" action="/rooms/filteredListing" class="inline-form">
+        <h3>Filter by Location</h3>
+        <div>
+            <select name="location">
+                <option value="All" {{#if_eq location "All"}} {{/if_eq}}>All</option>
+                <option value="Toronto" {{#if_eq location "Toronto"}} {{/if_eq}}>Toronto</option>
+                <option value="Vancouver" {{#if_eq location "Vancouver"}} {{/if_eq}}>Vancouver</option>
+                <option value="Ottawa" {{#if_eq location "Ottawa"}} {{/if_eq}}>Ottawa</option>
+            </select>
+        </div>
+        <input type="submit" value="Go" class="button">
+    </form>
+</div>
+
+<section>
+    <div class="roomListing-section">
+        {{#if admin}}
+            {{#each roomList}}
+                <article class="room">
+                    <header class="bottom-border">
+                        <div class="room-image-container"><img class="room-image" src={{this.imagePath}} alt="Product Image"><div>
+                    </header>
+                    <p>{{this.location}}</p>
+                    <h3>{{this.name}}</h3>
+                    <p>{{this.description}}</p>
+                    <p>${{this.price}} CAD/night</p>     
+                    <a href="/rooms/edit/{{this.id}}" class="button">Edit Room</a>
+                    <a href="/rooms/delete/{{this.id}}?method=DEL" class="button">Delete Room</a>
+                </article>
+            {{else}}
+                <h3>No Rooms in Database</h3>
+            {{/each}}
+        {{else}}
+            {{#each roomList}}
+            <article class="room">
+                <header class="bottom-border">
+                    <div class="room-image-container"><img class="room-image" src={{this.imagePath}} alt="Product Image"><div>
+                </header>
+                <p>{{this.location}}</p>
+                <h3>{{this.name}}</h3>
+                <p>{{this.description}}</p>
+                <p>${{this.price}} CAD/night</p>
+            </article>
+            {{else}}
+                <h3>No Rooms in Database</h3>
+            {{/each}}
+        {{/if}}
+    </div>
+</section>

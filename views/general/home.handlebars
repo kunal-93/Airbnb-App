@@ -5,12 +5,11 @@
         <div class="city-select-container">
             <h3>Where in Canada</h3>
             <div>
-                <select name="location" value={{userData.location}}>
-                    <option value="Toronto">Toronto</option>
-                    <option value="Vancouver">Vancouver</option>
-                    <option value="Ottawa">Ottawa</option>
-                    <option value="Montreal">Montreal</option>
-                    <option value="London">Montreal</option>
+                <select name="location">
+                    <option value="All" {{#if_eq userData.location "All"}} {{/if_eq}}>All</option>
+                    <option value="Toronto" {{#if_eq userData.location "Toronto"}} {{/if_eq}}>Toronto</option>
+                    <option value="Vancouver" {{#if_eq userData.location "Vancouver"}} {{/if_eq}}>Vancouver</option>
+                    <option value="Ottawa" {{#if_eq userData.location "Ottawa"}} {{/if_eq}}>Ottawa</option>
                 </select>
             </div>
         </div>

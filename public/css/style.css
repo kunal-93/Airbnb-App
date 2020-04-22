@@ -92,9 +92,15 @@ div{
     text-align: center;
 }
 
-.adminHeader{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+.center-align{
+    text-align: center;
+}
+
+.user-header{
+    display: flex;
+    justify-content: space-between;
+    box-sizing: border-box;
+    margin:1em;
 }
 .adminOptions{
     display: flex;
@@ -135,8 +141,9 @@ div{
 
 .form{
     position: relative;
-    top: 2em;
+    top: 1.5em;
     background-color: whitesmoke;
+    margin-bottom: 3em;
     margin-left: auto;
     margin-right: auto;
     max-width: 80%;
@@ -146,6 +153,21 @@ div{
     padding: 1em;
     border-radius: .5em;
     box-shadow: .2em .2em 2em grey;
+}
+
+.inline-form{
+    position: relative;
+    top: .5em;
+    background-color: whitesmoke;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 80%;
+    display: flex;
+    justify-content: space-evenly;
+    /* font-size: 1.2em; */
+    padding: .3em;
+    border-radius: .2em;
+    box-shadow: .2em .2em 1em grey;
 }
 
 .form > div {

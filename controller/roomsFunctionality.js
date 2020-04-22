@@ -1,8 +1,9 @@
-const RoomListing = require("../models/rooms/roomListing");
+const RoomListing = require("./roomListing");
 const roomModel = require("../models/Room");
 const path = require("path");
 
-const validateRoom = roomData =>{
+const validateRoom = (req, updateRequest=false) =>{
+    const roomData = req.body;
     const errors = {}
 
     if(roomData.title=="")
@@ -11,21 +12,31 @@ const validateRoom = roomData =>{
         errors.invalidRoomDescription = "Description cannot be empty";
     if(roomData.price == "")
         errors.invalidPrice = "Price must be entered";
-    
+    if(req.files == null){
+        if(updateRequest == false)
+            errors.unexpectedErrors
+    }
+    else{
+        const file = req.files.image;
+        if (
+            !file.mimetype.includes("jpeg") &&
+            !file.mimetype.includes("jpg") &&
+            !file.mimetype.includes("png") &&
+            !file.mimetype.includes("gif")
+            ) 
+        {
+            errors.unexpectedErrors = "Only images are allowed";
+        }
+    }
     return errors;
 }
 
 const addRoom = (req, res) => {
-
-    const roomData = req.body;
-    const errors = validateRoom(roomData);
+    const errors = validateRoom(req);
 
     if(Object.keys(errors).length > 0){
-        res.render("general/adminDashboard", {
-            adminAction: {addRoom: true},
+        res.render("rooms/addRoomForm", {
             errorMessages : errors,
-            userData: roomData,
-            Rooms: RoomListing.getAllRooms()
         });
     }
     else{
@@ -49,36 +60,54 @@ const saveRoom = (req, res) => {
     
     newRoom.save()
     .then((room)=>{
-        req.files.image.name = `mainImage_${room._id}_${path.parse(req.files.image.name).ext}`;
-        req.files.image.mv(`public/uploads/${req.files.image.name}`)
-        .then(() => {
-
-            roomModel.updateOne({_id: room._id}, {
-                image: req.files.image.name
-            })
-            .then(()=>{
-                res.render("general/adminDashboard", {
-                    userData: room,
-                    Rooms: RoomListing.getAllRooms(),
-                    addSuccessful: true
-                });
-            })
-            .catch(err => console.log(`Unable to update Image path ${err}`))
-        })
-        .catch(err => console.log(`Error uploading Image ${err}`));
-
-        
+        updateImage(req, res, room)
     })
     .catch(err => {
         const errors = {UnexpectedErrors : "Error while saving " + err}
-        res.render("general/adminDashboard", {
-            adminAction: {addRoom: true},
+        res.render("rooms/addRoomForm", {
             errorMessages : errors,
-            userData: room,
-            Rooms: RoomListing.getAllRooms()
         });
     }) 
 }
 
+const updateImage = (req, res, room) => {
+    req.files.image.name = `mainImage_${room._id}_${path.parse(req.files.image.name).ext}`;
+    req.files.image.mv(`public/uploads/${req.files.image.name}`)
+    .then(() => {
+
+        roomModel.updateOne({_id: room._id}, {
+            image: req.files.image.name
+        })
+        .then(()=>{
+            res.redirect('/rooms/listing');
+        })
+        .catch(err => console.log(`Unable to update Image path ${err}`))
+    })
+    .catch(err => console.log(`Error uploading Image ${err}`));
+}
+
+const updateRoom = (req, res) => {
+    const room = req.body;
+    const id = req.params.id;
+    const roomInfo = {
+        title : room.title,
+        description : room.description,
+        price: room.price,
+        location : room.location,
+        isAvailable: room.isAvailable,
+        featured: room.isFeatured == "on"
+    }
+
+    roomModel.updateOne({_id: id}, roomInfo)
+    .then(()=>{
+        if(req.files != null)
+            updateImage(req, res, room)
+        else
+            res.redirect("/rooms/listing");
+    })
+    .catch(err=>console.log(`Error while updating ${err}`))
+}
 
 module.exports.addRoom = addRoom;
+module.exports.updateRoom = updateRoom;
+module.exports.validateRoom = validateRoom;

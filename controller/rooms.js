@@ -3,31 +3,37 @@ const router = express.Router()
 
 //Functional Imports
 const SearchValidation = require("./searchValidation");
-const {addRoom} = require("./roomsFunctionality");
-const RoomListing = require("../models/rooms/roomListing");
+const {validateRoom, addRoom, updateRoom} = require("./roomsFunctionality");
+const RoomListing = require("./roomListing");
 const roomModel = require("../models/Room");
+const {isAdmin} = require("./middleware/auth");
 
 router.get("/listing", (req, res) =>{
-    res.render("general/login", {title: "login-AirBnB"});
+
+    RoomListing.getRoomsByLocation(req, res);
 });
 
 router.post('/listing', (req, res) => {
     SearchValidation.searchValidation(req, res);
 });
 
+router.post('/filteredListing', (req, res) =>{
+    // res.redirect(`/rooms/listing?location=${req.body.location}`);
+    RoomListing.getRoomsByLocation(req, res);
+
+});
+
+router.get('/addRoom', isAdmin, (req, res) =>{
+    res.render('rooms/addRoomForm', {
+        title: 'Add Room - AirBnB'
+    });
+});
+
 router.post('/addRoom', (req, res) =>{
     addRoom(req, res);
 });
 
-router.post('/createButton', (req, res) =>{
-    res.render('general/adminDashboard', {
-        title: 'admin dashboard-AirBnb',
-        adminAction : {addRoom: true},
-        Rooms: RoomListing.getAllRooms()
-    });
-})
-
-router.get('/edit/:id', (req, res) => {
+router.get('/edit/:id', isAdmin, (req, res) => {
 
     roomModel.findById(req.params.id)
     .then(room => {
@@ -40,7 +46,7 @@ router.get('/edit/:id', (req, res) => {
             isAvailable: room.isAvailable, 
             featured : room.featured
         };
-        // console.log(roomInfo);
+  
         res.render("rooms/editRoomForm", {
             title: "Edit Room - AirBnb",
             roomData: roomInfo
@@ -51,29 +57,24 @@ router.get('/edit/:id', (req, res) => {
 });
 
 router.put('/update/:id', (req, res) => {
-    const room = req.body;
-    const id = req.params.id;
-    const roomInfo = {
-        title : room.title,
-        description : room.description,
-        price: room.price,
-        location : room.location,
-        isAvailable: room.isAvailable,
-        featured: room.isFeatured == "on"
-    }
 
-    roomModel.updateOne({_id: id}, roomInfo)
-    .then(()=>{
-        res.redirect("/user/dashboard");
-    })
-    .catch(err=>console.log(`Error while updating ${err}`))
+    const errors = validateRoom(req, true);
+
+    if(Object.keys(errors).length > 0){
+        res.render("rooms/editRoomForm", {
+            errorMessages : errors,
+        });
+    }
+    else{
+        updateRoom(req, res);
+    }
 })
 
 router.delete('/delete/:id', (req, res) => {
 
     roomModel.deleteOne({_id: req.params.id})
     .then(()=>{
-        res.redirect("/user/dashboard");
+        res.redirect("/rooms/listing");
     })
     .catch(err=>console.log(`Error while deleting ${err}`));
     
