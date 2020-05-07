@@ -46,7 +46,7 @@ router.get('/edit/:id', isAdmin, (req, res) => {
             isAvailable: room.isAvailable, 
             featured : room.featured
         };
-  
+        
         res.render("rooms/editRoomForm", {
             title: "Edit Room - AirBnb",
             roomData: roomInfo
