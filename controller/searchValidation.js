@@ -15,12 +15,10 @@ function searchValidation(req, res){
         let currMonth = currDateObj.getMonth() + 1;
         currMonth = currMonth>9?currMonth:'0'+currMonth;
 
-        let currDay = currDateObj.getDate() + 1;
-        currDay = currDay>9?currDay:'0'+currDay;
+        let currDay = currDateObj.getDate();
+        currDay = currDay>9?currDay:'0'+ currDay;
 
         const currDate = currDateObj.getFullYear() + "-" + currMonth + "-" + currDay;
-        
-        //console.log(currDate, checkInDate, checkOutDate);
 
         if(checkInDate < currDate || checkOutDate < currDate)
             errors.invalidCheckInCheckOut = "dates cannot be in past";
