@@ -6,7 +6,7 @@ const SearchValidation = require("./searchValidation");
 const {validateRoom, addRoom, updateRoom} = require("./roomsFunctionality");
 const RoomListing = require("./roomListing");
 const roomModel = require("../models/Room");
-const {isAdmin} = require("./middleware/auth");
+const {isAdmin, isAuthenticated} = require("./middleware/auth");
 
 router.get("/listing", (req, res) =>{
 
@@ -56,8 +56,10 @@ router.get('/edit/:id', isAdmin, (req, res) => {
   
 });
 
-router.get('/reserve/:id', (req, res) => {
-    
+router.get('/reserve/:id', isAuthenticated, (req, res) => {
+    res.render('rooms/roomDescription', {
+        title: 'Reserve Room-Airbnb'
+    })
 })
 
 router.put('/update/:id', (req, res) => {

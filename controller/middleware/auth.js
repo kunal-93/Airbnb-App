@@ -4,6 +4,7 @@ const isAuthenticated = (req, res, next) => {
         next();
     }
     else{
+        req.session.redirectTo = req.originalUrl;
         res.redirect("/user/login");
     }
 }
@@ -14,6 +15,7 @@ const isAdmin = (req, res, next) => {
         next();
     }
     else{
+        req.session.redirectTo = req.originalUrl;
         res.redirect("/user/login");
     }
 }

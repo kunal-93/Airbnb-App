@@ -1,0 +1,44 @@
+<div>
+    <section class="room">
+        <header class="bottom-border">
+            <div class="room-image-container"><img class="room-image" src={{this.imagePath}} alt="Product Image"><div>
+        </header>
+        <p>{{this.location}}</p>
+        <h3>{{this.name}}</h3>
+        <p>{{this.description}}</p>
+        <p>${{this.price}} CAD/night</p>
+    </section>
+    <section class="room">
+        <form class="form" action="" method="POST">
+            <div class="check-in-check-out">
+                {{#if errorMessages.invalidCheckInCheckOut}}
+                    <div class="tooltip">
+                        <span class="material-icons">error</span>
+                        <span class="tooltiptext">{{errorMessages.invalidCheckInCheckOut}}</span>
+                    </div>
+                {{/if}}
+                <div>
+                    <h7>Check-In</h7>
+                    <input type="date" name="checkIn" value={{userData.checkIn }}>
+                </div>
+                <div>
+                    <h7>Check-Out</h7>
+                    <input type="date" name="checkOut" value={{userData.checkOut}}> 
+                </div>
+            </div>
+        
+            <div>
+                {{#if errorMessages.invalidGuests}}
+                    <div class="tooltip">
+                        <span class="material-icons">error</span>
+                        <span class="tooltiptext">{{errorMessages.invalidGuests}}</span>
+                    </div>
+                {{/if}}
+                <h7>Guests</h7>
+                <input type="number" name="guestCount" placeholder="Number of Guests" min="1"  value={{userData.guestCount}}> 
+            </div>
+            
+            <input type="submit" value="Reserve" class="button">
+        </form> 
+    </section>
+</div>
