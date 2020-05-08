@@ -24,8 +24,9 @@ const userAuthentication = (req, res) => {
             .then(isMatched => {
                 if(isMatched){
                     req.session.userInfo = user;
-                    // console.log(req.session.userInfo);
-                    res.redirect('/user/dashboard');
+                    const redirectTo = req.session.redirectTo || '/user/dashboard';
+                    delete req.session.redirectTo
+                    res.redirect(redirectTo);
                 }
                 else{
                     errors.authenticationErrors = "Email and/or password does not match"
