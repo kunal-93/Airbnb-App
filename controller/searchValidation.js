@@ -1,5 +1,17 @@
 const rooms = require('./roomListing');
 
+const getLocalTodayDate = () => {
+    const currDateObj = new Date();
+
+    let [currMonth, currDay, currYear] = currDateObj.toLocaleDateString().split('/');
+
+    currMonth = currMonth>9?currMonth:'0'+currMonth;
+
+    currDay = currDay>9?currDay:'0'+ currDay;
+        
+    return   currYear + "-" + currMonth + "-" + currDay;
+}
+
 function searchValidation(req, res){
 
     const errors = {};
@@ -8,17 +20,10 @@ function searchValidation(req, res){
         errors.invalidCheckInCheckOut = "dates must be selected";
     }
     else{
-        const currDateObj = new Date();
+        
         const checkInDate = req.body.checkIn;
         const checkOutDate = req.body.checkOut;
-
-        let currMonth = currDateObj.getMonth() + 1;
-        currMonth = currMonth>9?currMonth:'0'+currMonth;
-
-        let currDay = currDateObj.getDate();
-        currDay = currDay>9?currDay:'0'+ currDay;
-
-        const currDate = currDateObj.getFullYear() + "-" + currMonth + "-" + currDay;
+        const currDate = getLocalTodayDate();
 
         if(checkInDate < currDate || checkOutDate < currDate)
             errors.invalidCheckInCheckOut = "dates cannot be in past";

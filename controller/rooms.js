@@ -56,6 +56,10 @@ router.get('/edit/:id', isAdmin, (req, res) => {
   
 });
 
+router.get('/reserve/:id', (req, res) => {
+    
+})
+
 router.put('/update/:id', (req, res) => {
 
     const errors = validateRoom(req, true);
