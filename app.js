@@ -5,6 +5,8 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const fileUpload = require('express-fileupload');
 
+const {trimFields}  = require('./controller/functionality/general');
+
 require('dotenv').config({path:"./config/keys.env"})
 
 const app = express();
@@ -59,9 +61,9 @@ app.use(session({
   }))
 
 app.use((req, res, next) => {
+    trimFields(req);
     if(req.session != null){
         res.locals.user = req.session.userInfo;
-        // console.log(Object.keys(req.session.userInfo));
     }
     next();
 })
@@ -88,3 +90,5 @@ mongoose.connect(process.env.MONGO_DB_CONNECTION_STRING, {useNewUrlParser: true,
 app.listen(port, () => {
     console.log(`Web app is running on port : ${port}`);
 });
+
+module.exports = app;
