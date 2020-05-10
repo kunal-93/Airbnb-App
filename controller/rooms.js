@@ -3,7 +3,7 @@ const router = express.Router()
 
 //Functional Imports
 const SearchValidation = require("./searchValidation");
-const {validateRoom, addRoom, updateRoom} = require("./roomsFunctionality");
+const {validateRoom, addRoom, updateRoom, findOneRoomAndRender} = require("./roomDBLogic");
 const RoomListing = require("./roomListing");
 const roomModel = require("../models/Room");
 const {isAdmin, isAuthenticated} = require("./middleware/auth");
@@ -29,46 +29,30 @@ router.get('/addRoom', isAdmin, (req, res) =>{
     });
 });
 
-router.post('/addRoom', (req, res) =>{
+router.post('/addRoom', isAdmin, (req, res) =>{
     addRoom(req, res);
 });
 
 router.get('/edit/:id', isAdmin, (req, res) => {
 
-    roomModel.findById(req.params.id)
-    .then(room => {
-        const roomInfo = {
-            id: room._id, 
-            title: room.title, 
-            description: room.description, 
-            price: room.price, 
-            location: room.location, 
-            isAvailable: room.isAvailable, 
-            featured : room.featured
-        };
-        
-        res.render("rooms/editRoomForm", {
-            title: "Edit Room - AirBnb",
-            roomData: roomInfo
-        })
-    })
-    .catch(err=>console.log(`Error while pulling from DB ${err}`));
-  
+    findOneRoomAndRender(req.params.id, res, "rooms/editRoomForm");  
 });
 
 router.get('/reserve/:id', isAuthenticated, (req, res) => {
-    res.render('rooms/roomDescription', {
-        title: 'Reserve Room-Airbnb'
-    })
+    findOneRoomAndRender(req.params.id, res, "rooms/roomDescription");
 })
 
-router.put('/update/:id', (req, res) => {
+router.post('/reserve/:id', isAuthenticated, (req, res) => {
 
+})
+
+router.put('/update/:id', isAdmin, (req, res) => {
     const errors = validateRoom(req, true);
-
+    
     if(Object.keys(errors).length > 0){
         res.render("rooms/editRoomForm", {
             errorMessages : errors,
+            roomData: req.body
         });
     }
     else{
@@ -76,7 +60,7 @@ router.put('/update/:id', (req, res) => {
     }
 })
 
-router.delete('/delete/:id', (req, res) => {
+router.delete('/delete/:id', isAdmin, (req, res) => {
 
     roomModel.deleteOne({_id: req.params.id})
     .then(()=>{

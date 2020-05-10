@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
-    "dev" : "nodemon app.js"
+    "dev": "nodemon app.js"
   },
   "author": "Kunal Dhawan",
   "license": "ISC",
@@ -20,6 +20,7 @@
     "express-session": "^1.17.1",
     "file-upload": "0.0.0",
     "mongoose": "^5.9.9",
+    "node-html-parser": "^1.2.16",
     "twilio": "^3.39.5"
   },
   "devDependencies": {

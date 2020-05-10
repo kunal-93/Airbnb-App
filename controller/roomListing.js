@@ -1,12 +1,22 @@
 const roomModel = require("../models/Room");
+
 const rooms = {
     
     roomListing :  [],
     featuredRooms : [],
     roomsByLocation: [],
 
+    getFilteredDescription(description){
+        const filteredArray =  description.map(ele => {
+            return {
+                heading: ele.heading,
+                paragraph: ele.paragraph
+            }
+        })
+    },
+
     init(){ 
-        roomModel.find()
+        roomModel.find().lean()
         .then(rooms => {
 
             const allRooms = rooms.map(room => {
@@ -18,7 +28,11 @@ const rooms = {
                     price: room.price,
                     location : room.location,
                     isAvailable: room.isAvailable,
-                    featured: room.featured
+                    featured: room.featured,
+                    beds: room.beds,
+                    bedRooms: room.bedRooms,
+                    maxOccupancy: room.maxOccupancy,
+                    baths: room.baths
                 }
             })
             this.roomListing.length = 0;
@@ -48,7 +62,7 @@ const rooms = {
        
         const query = filterLocation == null || filterLocation.localeCompare("All") == 0 ? {} : {location: filterLocation}
     
-        roomModel.find(query)
+        roomModel.find(query).lean()
         .then(rooms => {
             
             const filteredRooms = rooms.map(room => {
@@ -60,7 +74,11 @@ const rooms = {
                     price: room.price,
                     location : room.location,
                     isAvailable: room.isAvailable,
-                    featured: room.featured
+                    featured: room.featured,
+                    beds: room.beds,
+                    bedRooms: room.bedRooms,
+                    maxOccupancy: room.maxOccupancy,
+                    baths: room.baths
                 }
             })
             const data =  {

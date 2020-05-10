@@ -112,7 +112,12 @@ div{
     display: inline-block;
     color: red;
   }
-  
+
+.room-description{
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
 .tooltip .tooltiptext {
     font-size: .7em;
     visibility: hidden;
@@ -340,5 +345,12 @@ div{
         top: 17em;
         font-size: 2.5em;
     }
+    .room-description{
+        grid-template-columns: 2fr 1fr;
+    }
+}
+
+.form-wide {
+    max-width: 90%;
 }
 

@@ -1,5 +1,5 @@
 <div>
-    <form method="POST" action="/rooms/update/{{roomData.id}}?method=PUT" class="form">
+    <form method="POST" action="/rooms/update/{{roomData.id}}?method=PUT" class="form" enctype="multipart/form-data">
         <div>
             {{#if errorMessages.invalidTitle}}
                 <div class="tooltip">
@@ -27,6 +27,56 @@
         </div>
 
         <div>
+            {{#if errorMessages.invalidBedRooms}}
+                <div class="tooltip">
+                    <span class="material-icons">error</span>
+                    <span class="tooltiptext">{{errorMessages.invalidBedRooms}}</span>
+                </div>
+            {{/if}}
+            <h7>No. of Bed Rooms</h7>
+            <input min="1" type="Number" name="bedRooms" value={{roomData.bedRooms}}>
+        </div>
+
+        <div>
+            {{#if errorMessages.invalidBeds}}
+                <div class="tooltip">
+                    <span class="material-icons">error</span>
+                    <span class="tooltiptext">{{errorMessages.invalidBeds}}</span>
+                </div>
+            {{/if}}
+            <h7>No. of Beds</h7>
+            <input min="1" type="Number" name="beds" value={{roomData.beds}}>
+        </div>
+
+        <div>
+            {{#if errorMessages.invalidBaths}}
+                <div class="tooltip">
+                    <span class="material-icons">error</span>
+                    <span class="tooltiptext">{{errorMessages.invalidBaths}}</span>
+                </div>
+            {{/if}}
+            <h7>No. of Baths</h7>
+            <input min="1" type="Number" name="baths" value={{roomData.baths}}>
+        </div>
+
+        <div>
+            {{#if errorMessages.invalidMaxOccupancy}}
+                <div class="tooltip">
+                    <span class="material-icons">error</span>
+                    <span class="tooltiptext">{{errorMessages.invalidMaxOccupancy}}</span>
+                </div>
+            {{/if}}
+            <h7>Max Occupancy</h7>
+            <input min="1" type="Number" name="maxOccupancy" value={{roomData.maxOccupancy}}>
+        </div>
+        
+        <div>
+            {{#if errorMessages.invalidPrice}}
+                <div class="tooltip">
+                    <span class="material-icons">error</span>
+                    <span class="tooltiptext">{{errorMessages.invalidPrice}}</span>
+                </div>
+            {{/if}}
             <h7>Price/night</h7>
             <input min="1" type="number" name="price" value={{roomData.price}} placeholder="Price">
         </div>
