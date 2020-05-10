@@ -43,7 +43,6 @@ app.engine('handlebars', exphbs(
 ));
 
 app.use((req, res, next) => {
-
     if(req.query.method == "PUT"){
         req.method="PUT";
     }

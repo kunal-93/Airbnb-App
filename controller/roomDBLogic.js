@@ -1,4 +1,3 @@
-const RoomListing = require("./roomListing");
 const roomModel = require("../models/Room");
 const path = require("path");
 
@@ -10,8 +9,25 @@ const validateRoom = (req, updateRequest=false) =>{
         errors.invalidTitle = "Name cannot be empty";
     if(roomData.description == "")
         errors.invalidRoomDescription = "Description cannot be empty";
+    else{
+        try{
+            const descriptionObject = JSON.parse(roomData.description);
+            roomData.description = descriptionObject;
+        }
+        catch(err){ 
+            errors.invalidRoomDescription = "Description must be a valid JSON String"
+        }
+    }
     if(roomData.price == "")
         errors.invalidPrice = "Price must be entered";
+    if(roomData.beds == "")
+        errors.invalidBeds = "Beds must be entered";
+    if(roomData.bedRooms == "")
+        errors.invalidBedRooms = "Bed Rooms must be entered";
+    if(roomData.baths == "")
+        errors.invalidBaths = "Baths must be entered";
+    if(roomData.maxOccupancy == "")
+        errors.invalidMaxOccupancy = "Max Occupancy must be entered";
     if(req.files == null){
         if(updateRequest == false)
             errors.unexpectedErrors
@@ -33,10 +49,11 @@ const validateRoom = (req, updateRequest=false) =>{
 
 const addRoom = (req, res) => {
     const errors = validateRoom(req);
-
     if(Object.keys(errors).length > 0){
+        req.body.description = JSON.stringify(req.body.description, null, 2);
         res.render("rooms/addRoomForm", {
             errorMessages : errors,
+            roomData: req.body
         });
     }
     else{
@@ -46,6 +63,7 @@ const addRoom = (req, res) => {
 
 const saveRoom = (req, res) => {
     const room = req.body;
+
     const newRoomInfo = {
         title : room.title,
         image: "default",
@@ -53,29 +71,35 @@ const saveRoom = (req, res) => {
         price: room.price,
         location : room.location,
         isAvailable: room.isAvailable,
-        featured: room.isFeatured == "on"
+        featured: room.isFeatured == "on",
+        beds: room.beds,
+        bedRooms: room.bedRooms,
+        maxOccupancy: room.maxOccupancy,
+        baths: room.baths
     }
 
     const newRoom = new roomModel(newRoomInfo);
     
     newRoom.save()
     .then((room)=>{
-        updateImage(req, res, room)
+        updateImage(req, res, room._id)
     })
     .catch(err => {
         const errors = {UnexpectedErrors : "Error while saving " + err}
+        
         res.render("rooms/addRoomForm", {
             errorMessages : errors,
+            roomData: newRoomInfo
         });
     }) 
 }
 
-const updateImage = (req, res, room) => {
-    req.files.image.name = `mainImage_${room._id}_${path.parse(req.files.image.name).ext}`;
+const updateImage = (req, res, roomID) => {
+    req.files.image.name = `mainImage_${roomID}_${path.parse(req.files.image.name).ext}`;
     req.files.image.mv(`public/uploads/${req.files.image.name}`)
     .then(() => {
 
-        roomModel.updateOne({_id: room._id}, {
+        roomModel.updateOne({_id: roomID}, {
             image: req.files.image.name
         })
         .then(()=>{
@@ -95,19 +119,62 @@ const updateRoom = (req, res) => {
         price: room.price,
         location : room.location,
         isAvailable: room.isAvailable,
-        featured: room.isFeatured == "on"
+        featured: room.isFeatured == "on",
+        beds: room.beds,
+        bedRooms: room.bedRooms,
+        maxOccupancy: room.maxOccupancy,
+        baths: room.baths
     }
 
     roomModel.updateOne({_id: id}, roomInfo)
     .then(()=>{
         if(req.files != null)
-            updateImage(req, res, room)
+            updateImage(req, res, id)
         else
             res.redirect("/rooms/listing");
     })
     .catch(err=>console.log(`Error while updating ${err}`))
 }
 
+const getDescriptionArray = (description) => {
+    const filteredArray =  description.map(ele => {
+        return {
+            heading: ele.heading,
+            paragraph: ele.paragraph
+        }
+    })
+
+    return JSON.stringify(filteredArray, null, 2);
+}
+
+const findOneRoomAndRender = (roomId, res, renderPath) => {
+
+    roomModel.findById(roomId).lean()
+    .then(room => {
+
+        const roomInfo = {
+            id: room._id, 
+            title: room.title, 
+            imagePath: `/uploads/${room.image}`,
+            description: getDescriptionArray(room.description), 
+            price: room.price, 
+            location: room.location, 
+            isAvailable: room.isAvailable, 
+            featured : room.featured,
+            beds: room.beds,
+            bedRooms: room.bedRooms,
+            maxOccupancy: room.maxOccupancy,
+            baths: room.baths
+        };
+        
+        res.render(renderPath, {
+            roomData: roomInfo
+        })
+    })
+    .catch(err=>console.log(`Error while pulling from DB ${err}`));
+}
+
 module.exports.addRoom = addRoom;
 module.exports.updateRoom = updateRoom;
 module.exports.validateRoom = validateRoom;
+module.exports.findOneRoomAndRender = findOneRoomAndRender;

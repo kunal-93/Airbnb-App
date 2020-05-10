@@ -1,15 +1,15 @@
-<div>
+<div class="room-description">
     <section class="room">
         <header class="bottom-border">
-            <div class="room-image-container"><img class="room-image" src={{this.imagePath}} alt="Product Image"><div>
+            <div class="room-image-container"><img class="room-image" src="{{roomData.imagePath}}" alt="Product Image"><div>
         </header>
-        <p>{{this.location}}</p>
-        <h3>{{this.name}}</h3>
-        <p>{{this.description}}</p>
-        <p>${{this.price}} CAD/night</p>
+        <p>{{roomData.location}}</p>
+        <h3>{{roomData.name}}</h3>
+        <p>{{roomData.description}}</p>
+        <p>${{roomData.price}} CAD/night</p>
     </section>
     <section class="room">
-        <form class="form" action="" method="POST">
+        <form class="form form-wide" action="" method="POST">
             <div class="check-in-check-out">
                 {{#if errorMessages.invalidCheckInCheckOut}}
                     <div class="tooltip">

@@ -29,7 +29,7 @@ router.get("/logout", (req, res) => {
 })
 
 router.get("/dashboard", isAuthenticated, (req, res) =>{
-    // console.log(RoomListing.getAllRooms());
+
     const roomsData = RoomListing.getAllRooms();
     if(req.session.userInfo.isAdmin){
         res.render("general/adminDashboard", {

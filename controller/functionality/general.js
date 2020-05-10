@@ -5,4 +5,14 @@ const trimFields = object => {
     }
 }
 
+
+const stringToHTML = str => {
+    
+	let dom = document.createElement('div');
+	dom.innerHTML = str;
+	return dom;
+
+};
+
+module.exports.stringToHTML = stringToHTML;
 module.exports.trimFields = trimFields;
