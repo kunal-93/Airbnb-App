@@ -51,24 +51,7 @@
     <div class="roomListing-section">
         {{#each featuredRooms}}
             <article class="room">
-                <header class="bottom-border">
-                    <div class="room-image-container"><img class="room-image" src="{{this.imagePath}}" alt="Product Image"><div>
-                </header>
-                <p>{{this.location}}</p>
-                <h3>{{this.title}}</h3>
-                <div>
-                    {{#each description}}
-                        <div>
-                        {{#if this.heading}}
-                            <h5>{{this.heading}}</h5>
-                        {{/if}}
-                        {{#if this.paragraph}}
-                            <p>{{this.paragraph}}</p>
-                        {{/if}} 
-                        </div>
-                    {{/each}}
-                </div>
-                <p>${{this.price}} CAD/night</p>     
+                {{> roomDescription}}    
             </article>
         {{/each}}
     </div>
