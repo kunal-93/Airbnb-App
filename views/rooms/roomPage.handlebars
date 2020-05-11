@@ -4,15 +4,25 @@
             <div class="room-image-container"><img class="room-image" src="{{roomData.imagePath}}" alt="Product Image"><div>
         </header>
         <main class="room-description">
+            <div><h2>{{roomData.title}}</h2></div>
+
             <div>
                 <span class="material-icons">location_city</span>
                 <span>{{roomData.location}}</span>
             </div>
             
-            <div><h3>{{roomData.title}}</h3></div>
-            
+            <div class="room-highlights">
+                <span>{{roomData.maxOccupancy}} {{#if_singular roomData.maxOccupancy "guest"}} {{/if_singular}}</span>
+                <span>{{roomData.bedRooms}} {{#if_singular roomData.bedRooms "bedroom"}} {{/if_singular}}</span>
+                <span>{{roomData.beds}} {{#if_singular roomData.beds "bed"}} {{/if_singular}}</span>
+                <span>{{roomData.baths}} {{#if_singular roomData.baths "bath"}} {{/if_singular}}</span>
+            </div>
             <div>
-                <span class="material-icons">description</span>
+                <div>
+                    <span><i class="fas fa-info-circle"></i></span>
+                    <span>Highlights</span>
+                </div>
+                
                 {{#each roomData.description}}
                     <div>
                     {{#if this.heading}}
@@ -26,9 +36,8 @@
             </div>
             <div>
                 <span><i class="fas fa-tag"></i></span>
-                <span>${{this.price}} CAD/night</span>
+                <span>${{roomData.price}} CAD/night</span>
             </div>
-            
         </main>
     </section>
     <section class="room">

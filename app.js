@@ -37,6 +37,12 @@ app.engine('handlebars', exphbs(
             if_checked: function(a){
                 if(a == true)
                     return "checked";
+            },
+            if_singular: function(num, feature){
+                if(num==1)
+                    return feature;
+                else
+                    return feature+"s";
             }
         }
     }

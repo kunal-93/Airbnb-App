@@ -2,15 +2,25 @@
     <div class="room-image-container"><img class="room-image" src="{{this.imagePath}}" alt="Product Image"><div>
 </header>
 <main class="room-description">
+    <div><h2>{{this.title}}</h2></div>
+
     <div>
         <span class="material-icons">location_city</span>
         <span>{{this.location}}</span>
     </div>
     
-    <div><h3>{{this.title}}</h3></div>
-    
+    <div class="room-highlights">
+        <span>{{this.maxOccupancy}} {{#if_singular this.maxOccupancy "guest"}} {{/if_singular}}</span>
+        <span>{{this.bedRooms}} {{#if_singular this.bedRooms "bedroom"}} {{/if_singular}}</span>
+        <span>{{this.beds}} {{#if_singular this.beds "bed"}} {{/if_singular}}</span>
+        <span>{{this.baths}} {{#if_singular this.baths "bath"}} {{/if_singular}}</span>
+    </div>
     <div>
-        <span class="material-icons">description</span>
+        <div>
+            <span><i class="fas fa-info-circle"></i></span>
+            <span>Highlights</span>
+        </div>
+        
         {{#each description}}
             <div>
             {{#if this.heading}}
