@@ -127,9 +127,15 @@ div{
     vertical-align: middle;
 }
 
+.room-description p{
+    font-size: .9em;
+}
+
 .room-highlights > span{
     margin-right: .5em;
 }
+
+
 
 .tooltip .tooltiptext {
     font-size: .7em;
