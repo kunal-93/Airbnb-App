@@ -113,9 +113,18 @@ div{
     color: red;
   }
 
-.room-description{
+.room-page{
     display: grid;
     grid-template-columns: 1fr;
+}
+.room-description{
+    
+    box-sizing: border-box;
+    padding: .5em;
+    box-shadow: .01em .01em .07em grey;
+}
+.room-description span{
+    vertical-align: middle;
 }
 
 .tooltip .tooltiptext {
@@ -345,8 +354,8 @@ div{
         top: 17em;
         font-size: 2.5em;
     }
-    .room-description{
-        grid-template-columns: 2fr 1fr;
+    .room-page{
+        grid-template-columns: 1fr 1fr;
     }
 }
 

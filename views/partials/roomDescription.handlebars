@@ -1,0 +1,31 @@
+<header class="bottom-border">
+    <div class="room-image-container"><img class="room-image" src="{{this.imagePath}}" alt="Product Image"><div>
+</header>
+<main class="room-description">
+    <div>
+        <span class="material-icons">location_city</span>
+        <span>{{this.location}}</span>
+    </div>
+    
+    <div><h3>{{this.title}}</h3></div>
+    
+    <div>
+        <span class="material-icons">description</span>
+        {{#each description}}
+            <div>
+            {{#if this.heading}}
+                <h5>{{this.heading}}</h5>
+            {{/if}}
+            {{#if this.paragraph}}
+                <p>{{this.paragraph}}</p>
+            {{/if}} 
+            </div>
+        {{/each}}
+    </div>
+    <div>
+        <span><i class="fas fa-tag"></i></span>
+        <span>${{this.price}} CAD/night</span>
+    </div>
+    
+</main>
+<a href="/rooms/reserve/{{this.id}}" class="button">Reserve</a>

@@ -148,7 +148,6 @@ const getDescriptionArray = (description) => {
 }
 
 const findOneRoomAndRender = (roomId, res, renderPath) => {
-
     roomModel.findById(roomId).lean()
     .then(room => {
 
@@ -156,7 +155,7 @@ const findOneRoomAndRender = (roomId, res, renderPath) => {
             id: room._id, 
             title: room.title, 
             imagePath: `/uploads/${room.image}`,
-            description: getDescriptionArray(room.description), 
+            description: renderPath.includes("editRoomForm") ? getDescriptionArray(room.description) : room.description, 
             price: room.price, 
             location: room.location, 
             isAvailable: room.isAvailable, 

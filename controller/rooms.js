@@ -34,12 +34,11 @@ router.post('/addRoom', isAdmin, (req, res) =>{
 });
 
 router.get('/edit/:id', isAdmin, (req, res) => {
-
     findOneRoomAndRender(req.params.id, res, "rooms/editRoomForm");  
 });
 
 router.get('/reserve/:id', isAuthenticated, (req, res) => {
-    findOneRoomAndRender(req.params.id, res, "rooms/roomDescription");
+    findOneRoomAndRender(req.params.id, res, "rooms/roomPage");
 })
 
 router.post('/reserve/:id', isAuthenticated, (req, res) => {

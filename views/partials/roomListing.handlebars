@@ -18,25 +18,7 @@
         {{#if admin}}
             {{#each roomList}}
                 <article class="room">
-                    <header class="bottom-border">
-                        <div class="room-image-container"><img class="room-image" src="{{this.imagePath}}" alt="Product Image"><div>
-                    </header>
-                    <p>{{this.location}}</p>
-                    <h3>{{this.title}}</h3>
-                    <div>
-                        {{#each description}}
-                            <div>
-                            {{#if this.heading}}
-                                <h5>{{this.heading}}</h5>
-                            {{/if}}
-                            {{#if this.paragraph}}
-                                <p>{{this.paragraph}}</p>
-                            {{/if}} 
-                            </div>
-                        {{/each}}
-                    </div>
-                    <p>${{this.price}} CAD/night</p>
-                    <a href="/rooms/reserve/{{this.id}}" class="button">Reserve</a>
+                    {{> roomDescription}}
                     <a href="/rooms/edit/{{this.id}}" class="button">Edit Room</a>
                     <a href="/rooms/delete/{{this.id}}?method=DEL" class="button">Delete Room</a>
                 </article>
@@ -46,14 +28,7 @@
         {{else}}
             {{#each roomList}}
             <article class="room">
-                <header class="bottom-border">
-                    <div class="room-image-container"><img class="room-image" src="{{this.imagePath}}" alt="Product Image"><div>
-                </header>
-                <p>{{this.location}}</p>
-                <h3>{{this.name}}</h3>
-                <p>{{this.description}}</p>
-                <p>${{this.price}} CAD/night</p>
-                <a href="/rooms/reserve/{{this.id}}" class="button">Reserve</a>
+                {{> roomDescription}} 
             </article>
             {{else}}
                 <h3>No Rooms in Database</h3>
