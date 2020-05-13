@@ -2,22 +2,16 @@ const rooms = require('./roomListing');
 const {validateBookingDates}  = require('./functionality/general');
 
 
-const searchValidation = (req, res) =>{
+const searchValidation = (req, res, pageInfo) =>{
 
     const errors = {};
-    
-    if(req.body.checkIn == "" || req.body.checkOut == ""){
-        errors.invalidCheckInCheckOut = "dates must be selected";
-    }
-    else{
-        
-        const checkInDate = req.body.checkIn;
-        const checkOutDate = req.body.checkOut;
-        const result = validateBookingDates(checkInDate, checkOutDate);
 
-        if(result.errorFound)
-            errors.invalidCheckInCheckOut = result.msg;
-    }
+    const checkInDate = req.body.checkIn;
+    const checkOutDate = req.body.checkOut;
+    const errorMsg = validateBookingDates(checkInDate, checkOutDate);
+
+    if(errorMsg)
+        errors.invalidCheckInCheckOut = errorMsg;
 
     if(req.body.guestCount == ""){
         errors.invalidGuests = "Please select number of guests";
@@ -26,7 +20,8 @@ const searchValidation = (req, res) =>{
     if(Object.keys(errors).length > 0){
         res.render("general/home", {
             errorMessages : errors,
-            userData: req.body
+            userData: req.body,
+            featuredRooms: pageInfo.featuredRooms
         });
     }
     else{

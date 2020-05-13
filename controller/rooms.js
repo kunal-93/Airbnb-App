@@ -9,12 +9,14 @@ const roomModel = require("../models/Room");
 const {isAdmin, isAuthenticated} = require("./middleware/auth");
 
 router.get("/listing", (req, res) =>{
-
     RoomListing.getRoomsByLocation(req, res);
 });
 
 router.post('/listing', (req, res) => {
-    SearchValidation.searchValidation(req, res);
+    const pageInfo = {
+        featuredRooms: RoomListing.getFeaturedRooms()
+    }
+    SearchValidation.searchValidation(req, res, pageInfo);
 });
 
 router.post('/filteredListing', (req, res) =>{
