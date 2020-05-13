@@ -1,18 +1,8 @@
 const rooms = require('./roomListing');
+const {validateBookingDates}  = require('./functionality/general');
 
-const getLocalTodayDate = () => {
-    const currDateObj = new Date();
 
-    let [currMonth, currDay, currYear] = currDateObj.toLocaleDateString().split('/');
-
-    currMonth = currMonth>9?currMonth:'0'+currMonth;
-
-    currDay = currDay>9?currDay:'0'+ currDay;
-        
-    return   currYear + "-" + currMonth + "-" + currDay;
-}
-
-function searchValidation(req, res){
+const searchValidation = (req, res) =>{
 
     const errors = {};
     
@@ -23,12 +13,10 @@ function searchValidation(req, res){
         
         const checkInDate = req.body.checkIn;
         const checkOutDate = req.body.checkOut;
-        const currDate = getLocalTodayDate();
+        const result = validateBookingDates(checkInDate, checkOutDate);
 
-        if(checkInDate < currDate || checkOutDate < currDate)
-            errors.invalidCheckInCheckOut = "dates cannot be in past";
-        else if(checkOutDate < checkInDate)
-            errors.invalidCheckInCheckOut = "Checkout cannot be before checkin";
+        if(result.errorFound)
+            errors.invalidCheckInCheckOut = result.msg;
     }
 
     if(req.body.guestCount == ""){
@@ -42,11 +30,7 @@ function searchValidation(req, res){
         });
     }
     else{
-        // res.redirect(`/rooms/listing?location=${req.body.location}`);
         rooms.getRoomsByLocation(req, res)
-        // res.render("rooms/roomListing", {
-        //     roomList : rooms.roomsByLocation
-        // });
     }
 }
 
