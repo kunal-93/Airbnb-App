@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 //Functional Imports
-const SearchValidation = require("./searchValidation");
+const {searchValidation, bookingValidation} = require("./functionality/RoomBookingFormValidation");
 const {validateRoom, addRoom, updateRoom, findOneRoomAndRender} = require("./roomDBLogic");
 const RoomListing = require("./roomListing");
 const roomModel = require("../models/Room");
@@ -13,10 +13,7 @@ router.get("/listing", (req, res) =>{
 });
 
 router.post('/listing', (req, res) => {
-    const pageInfo = {
-        featuredRooms: RoomListing.getFeaturedRooms()
-    }
-    SearchValidation.searchValidation(req, res, pageInfo);
+    searchValidation(req, res);
 });
 
 router.post('/filteredListing', (req, res) =>{
@@ -41,11 +38,11 @@ router.get('/edit/:id', isAdmin, (req, res) => {
 
 router.get('/reserve/:id', isAuthenticated, (req, res) => {
     findOneRoomAndRender(req.params.id, res, "rooms/roomPage");
-})
+});
 
-router.post('/reserve/:id', isAuthenticated, (req, res) => {
-
-})
+router.put('/reserve/:id', isAuthenticated, (req, res) => {
+    bookingValidation(req, res);
+});
 
 router.put('/update/:id', isAdmin, (req, res) => {
     const errors = validateRoom(req, true);
