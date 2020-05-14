@@ -28,20 +28,21 @@ const getLocalTodayDate = () => {
 
 const validateBookingDates = (from, to) => {
 
-    const currDate = getLocalTodayDate();
+    let errorMsg = null;
 
-    let result = {}
-    if(from < currDate || to < currDate){
-        result.msg = "Dates cannot be in past";
-        result.errorFound = true;
+    if(from == "" || to == ""){
+        errorMsg = "dates must be selected";
     }
-    else if(to <= from){
-        result.msg = "Checkout must be atleast a day after checkin";
-        result.errorFound = true;
+    else{
+        const currDate = getLocalTodayDate();
+
+        if(from < currDate || to < currDate)
+            errorMsg = "Dates cannot be in past";
+        else if(to <= from)
+            errorMsg = "Checkout must be atleast a day after checkin";
     }
 
-    return result;
-    
+    return errorMsg;
 }
 
 module.exports.stringToHTML = stringToHTML;

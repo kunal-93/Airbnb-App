@@ -136,6 +136,22 @@ const updateRoom = (req, res) => {
     .catch(err=>console.log(`Error while updating ${err}`))
 }
 
+const updateRoomReservation = (roomID, res, from, to) => {
+    roomModel.findByIdAndUpdate(roomID, 
+        { 
+            $push: { "reserved" : {
+                from : from,
+                to: to
+            }}
+        },
+        {new: true, useFindAndModify: false, safe: true}
+    )
+    .then(()=>{
+        res.redirect("/rooms/listing");
+    })
+    .catch(err=>console.log(`Error while reserving room ${err}`));
+}
+
 const getDescriptionArray = (description) => {
     const filteredArray =  description.map(ele => {
         return {
@@ -147,7 +163,7 @@ const getDescriptionArray = (description) => {
     return JSON.stringify(filteredArray, null, 2);
 }
 
-const findOneRoomAndRender = (roomId, res, renderPath) => {
+const findOneRoomAndRender = (roomId, res, renderPath, Info = null) => {
     roomModel.findById(roomId).lean()
     .then(room => {
 
@@ -166,9 +182,14 @@ const findOneRoomAndRender = (roomId, res, renderPath) => {
             baths: room.baths
         };
         
-        res.render(renderPath, {
-            roomData: roomInfo
-        })
+        let data = {};
+        if(Info != null){
+            data = JSON.parse(JSON.stringify(Info));
+        }
+
+        data.roomData = roomInfo;
+
+        res.render(renderPath, data)
     })
     .catch(err=>console.log(`Error while pulling from DB ${err}`));
 }
@@ -177,3 +198,4 @@ module.exports.addRoom = addRoom;
 module.exports.updateRoom = updateRoom;
 module.exports.validateRoom = validateRoom;
 module.exports.findOneRoomAndRender = findOneRoomAndRender;
+module.exports.updateRoomReservation = updateRoomReservation;

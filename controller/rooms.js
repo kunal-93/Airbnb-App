@@ -2,24 +2,25 @@ const express = require('express')
 const router = express.Router()
 
 //Functional Imports
-const SearchValidation = require("./searchValidation");
+const {searchValidation, bookingValidation} = require("./functionality/RoomBookingFormValidation");
 const {validateRoom, addRoom, updateRoom, findOneRoomAndRender} = require("./roomDBLogic");
 const RoomListing = require("./roomListing");
 const roomModel = require("../models/Room");
 const {isAdmin, isAuthenticated} = require("./middleware/auth");
 
 router.get("/listing", (req, res) =>{
-
     RoomListing.getRoomsByLocation(req, res);
 });
 
 router.post('/listing', (req, res) => {
-    SearchValidation.searchValidation(req, res);
+    searchValidation(req, res, "general/home");
 });
 
 router.post('/filteredListing', (req, res) =>{
-    // res.redirect(`/rooms/listing?location=${req.body.location}`);
-    RoomListing.getRoomsByLocation(req, res);
+    if(req.session.isAdmin)
+        searchValidation(req, res, "general/adminDashboard");
+    else
+        searchValidation(req, res, "general/dashboard");
 
 });
 
@@ -39,11 +40,11 @@ router.get('/edit/:id', isAdmin, (req, res) => {
 
 router.get('/reserve/:id', isAuthenticated, (req, res) => {
     findOneRoomAndRender(req.params.id, res, "rooms/roomPage");
-})
+});
 
-router.post('/reserve/:id', isAuthenticated, (req, res) => {
-
-})
+router.put('/reserve/:id', isAuthenticated, (req, res) => {
+    bookingValidation(req, res);
+});
 
 router.put('/update/:id', isAdmin, (req, res) => {
     const errors = validateRoom(req, true);
