@@ -13,12 +13,14 @@ router.get("/listing", (req, res) =>{
 });
 
 router.post('/listing', (req, res) => {
-    searchValidation(req, res);
+    searchValidation(req, res, "general/home");
 });
 
 router.post('/filteredListing', (req, res) =>{
-    // res.redirect(`/rooms/listing?location=${req.body.location}`);
-    RoomListing.getRoomsByLocation(req, res);
+    if(req.session.isAdmin)
+        searchValidation(req, res, "general/adminDashboard");
+    else
+        searchValidation(req, res, "general/dashboard");
 
 });
 

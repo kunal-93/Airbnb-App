@@ -19,19 +19,20 @@ const validateRoomBookingForm = (req, res) => {
     return errors;
 }
 
-const searchValidation = (req, res) =>{
+const searchValidation = (req, res, toRenderOnError) =>{
 
     const errors = validateRoomBookingForm(req, res);
     
     if(Object.keys(errors).length > 0){
-        res.render("general/home", {
+        res.render(toRenderOnError, {
             errorMessages : errors,
             userData: req.body,
             featuredRooms: rooms.getFeaturedRooms()
         });
     }
     else{
-        rooms.getRoomsByLocation(req, res)
+        // rooms.getRoomsByLocation(req, res)
+        rooms.getFilteredRooms(req, res);
     }
 }
 

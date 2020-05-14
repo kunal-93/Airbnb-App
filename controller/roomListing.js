@@ -57,11 +57,7 @@ const rooms = {
         this.init();
         return this.featuredRooms;
     },
-    getRoomsByLocation(req, res){
-        const filterLocation = req.body.location;
-       
-        const query = filterLocation == null || filterLocation.localeCompare("All") == 0 ? {} : {location: filterLocation}
-    
+    getRoomsByQuery(query, req, res){
         roomModel.find(query).lean()
         .then(rooms => {
             
@@ -84,7 +80,7 @@ const rooms = {
             const data =  {
                 title: "room listing-AirBnB",
                 roomList : filteredRooms,
-                location: filterLocation
+                location: req.body.location
             }
             if (req.session.userInfo != null && req.session.userInfo.isAdmin)
                 data.admin = true
@@ -93,6 +89,31 @@ const rooms = {
             
         })
         .catch(err=>console.log(err));
+    },
+    getRoomsByLocation(req, res){
+        const filterLocation = req.body.location;
+       
+        const query = filterLocation == null || filterLocation.localeCompare("All") == 0 ? {} : {location: filterLocation}
+        
+        this.getRoomsByQuery(query, req, res);
+        
+    },
+    getFilteredRooms(req, res){
+        const filterLocation = req.body.location;
+        const fromDate = req.body.checkIn;
+        const toDate = req.body.checkOut;
+        
+        let query = filterLocation == null || filterLocation.localeCompare("All") == 0 ? {} : {location: filterLocation}
+
+        query.maxOccupancy = {$gte: req.body.guestCount}
+        query.reserved = {
+            //Check if any of the dates the room has been reserved for overlap with the requsted dates
+            $not: {
+                $elemMatch: {from: {$lt: new Date(toDate)}, to: {$gt: new Date(fromDate)}}
+            }
+        }        
+        this.getRoomsByQuery(query, req, res);
+
     }
 }
 

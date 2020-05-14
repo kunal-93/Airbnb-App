@@ -139,12 +139,12 @@ const updateRoom = (req, res) => {
 const updateRoomReservation = (roomID, res, from, to) => {
     roomModel.findByIdAndUpdate(roomID, 
         { 
-            $push: {reserved : {
+            $push: { "reserved" : {
                 from : from,
                 to: to
             }}
         },
-        {new: true, useFindAndModify: false}
+        {new: true, useFindAndModify: false, safe: true}
     )
     .then(()=>{
         res.redirect("/rooms/listing");

@@ -1,7 +1,7 @@
 <div class="city-select-container">
     <form method="POST" action="/rooms/filteredListing" class="inline-form">
-        <h3>Filter by Location</h3>
-        <div>
+        <div class="city-select-container">
+            <h3>Location</h3>
             <select name="location">
                 <option value="All" {{#if_eq location "All"}} {{/if_eq}}>All</option>
                 <option value="Toronto" {{#if_eq location "Toronto"}} {{/if_eq}}>Toronto</option>
@@ -9,6 +9,34 @@
                 <option value="Ottawa" {{#if_eq location "Ottawa"}} {{/if_eq}}>Ottawa</option>
             </select>
         </div>
+        <div class="check-in-check-out">
+            {{#if errorMessages.invalidCheckInCheckOut}}
+                <div class="tooltip">
+                    <span class="material-icons">error</span>
+                    <span class="tooltiptext">{{errorMessages.invalidCheckInCheckOut}}</span>
+                </div>
+            {{/if}}
+            <span>
+                <h7>Check-In</h7>
+                <input type="date" name="checkIn" value={{userData.checkIn }}>
+            </span>
+            <span>
+                <h7>Check-Out</h7>
+                <input type="date" name="checkOut" value={{userData.checkOut}}> 
+            </span>
+        </div>
+    
+        <div>
+            {{#if errorMessages.invalidGuests}}
+                <div class="tooltip">
+                    <span class="material-icons">error</span>
+                    <span class="tooltiptext">{{errorMessages.invalidGuests}}</span>
+                </div>
+            {{/if}}
+            <h7>Guests</h7>
+            <input type="number" name="guestCount" placeholder="Number of Guests" min="1"  value={{userData.guestCount}}> 
+        </div>
+        
         <input type="submit" value="Go" class="button">
     </form>
 </div>
