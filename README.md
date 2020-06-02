@@ -1,7 +1,7 @@
 Airbnb-App
 ========
 
-This web is inspired from Airbnb Web application and aims to implement its the features.
+This web app is inspired from Airbnb Web application and aims to implement its the features.
 
 Features
 --------
