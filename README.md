@@ -6,7 +6,7 @@ This web app is inspired from Airbnb Web application and aims to implement its t
 Features
 --------
 
-- Admin Login
+- Admin Login - Has access to add, update, remove a room.
 - User Registration
 - User Login
 - Room Booking
