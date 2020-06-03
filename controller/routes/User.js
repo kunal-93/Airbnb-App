@@ -3,10 +3,10 @@ const express = require('express')
 const router = express.Router();
 
 //Functional Imports
-const RoomListing = require("./roomListing");
-const UserRegistration = require("./registration.js");
-const LoginValidation = require("./login.js");
-const {isAuthenticated} = require("./middleware/auth");
+const RoomListing = require("../roomListing");
+const UserRegistration = require("../registration.js");
+const LoginValidation = require("../login.js");
+const {isAuthenticated} = require("../middleware/auth");
 
 router.get("/registration", (req, res) =>{
     res.render("general/registration", {title: "Registration-AirBnB"});

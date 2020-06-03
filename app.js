@@ -4,13 +4,22 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const fileUpload = require('express-fileupload');
-
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+const {swaggerOptions} = require('./controller/swagger');
 const {trimFields}  = require('./controller/functionality/general');
 
 require('dotenv').config({path:"./config/keys.env"})
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
+
+
+
+const swaggerDocs = swaggerJSDoc(swaggerOptions);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+
 
 app.use(fileUpload());
 
@@ -73,16 +82,15 @@ app.use((req, res, next) => {
     next();
 })
 
-// load Controllers
-const generalController = require('./controller/general');
-const roomsController = require('./controller/rooms');
-const userController = require('./controller/User');
+// load Controller routes
+const generalController = require('./controller/routes/general');
+const roomsController = require('./controller/routes/rooms');
+const userController = require('./controller/routes/User');
+
 // map controller to app object
 app.use('/', generalController);
 app.use('/rooms', roomsController);
 app.use('/user', userController);
-
-
 
 mongoose.connect(process.env.MONGO_DB_CONNECTION_STRING, {useNewUrlParser: true, useUnifiedTopology: true})
 .then(()=> {

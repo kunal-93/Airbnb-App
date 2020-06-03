@@ -8,7 +8,7 @@ const validateRoomBookingForm = (req, res) => {
     const checkInDate = req.body.checkIn;
     const checkOutDate = req.body.checkOut;
     const errorMsg = validateBookingDates(checkInDate, checkOutDate);
-
+    
     if(errorMsg)
         errors.invalidCheckInCheckOut = errorMsg;
 

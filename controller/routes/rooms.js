@@ -2,16 +2,33 @@ const express = require('express')
 const router = express.Router()
 
 //Functional Imports
-const {searchValidation, bookingValidation} = require("./functionality/RoomBookingFormValidation");
-const {validateRoom, addRoom, updateRoom, findOneRoomAndRender} = require("./roomDBLogic");
-const RoomListing = require("./roomListing");
-const roomModel = require("../models/Room");
-const {isAdmin, isAuthenticated} = require("./middleware/auth");
+const {searchValidation, bookingValidation} = require("../functionality/RoomBookingFormValidation");
+const {validateRoom, addRoom, updateRoom, findOneRoomAndRender} = require("../roomDBLogic");
+const RoomListing = require("../roomListing");
+const roomModel = require("../../models/Room");
+const {isAdmin, isAuthenticated} = require("../middleware/auth");
+
 
 router.get("/listing", (req, res) =>{
     RoomListing.getRoomsByLocation(req, res);
 });
 
+const {searchObject} = require("../swagger");
+/**
+ * @swagger
+ * /rooms/listing:
+ *  post:
+ *      description: fetches all the rooms by query parameters
+ *      parameters:
+ *          -   in: body
+ *              name: body
+ *              description: body object that needs to be submitted to fetch rooms
+ *              schema:
+ *                  $ref: "#/definitions/searchRooms"
+ *      responses:
+ *          200:
+ *              description: OK
+ */
 router.post('/listing', (req, res) => {
     searchValidation(req, res, "general/home");
 });
