@@ -3,22 +3,44 @@ const express = require('express')
 const router = express.Router();
 
 //Functional Imports
-const RoomListing = require("./roomListing");
-const UserRegistration = require("./registration.js");
-const LoginValidation = require("./login.js");
-const {isAuthenticated} = require("./middleware/auth");
+const RoomListing = require("../roomListing");
+const UserRegistration = require("../registration.js");
+const LoginValidation = require("../login.js");
+const {isAuthenticated} = require("../middleware/auth");
 
 router.get("/registration", (req, res) =>{
     res.render("general/registration", {title: "Registration-AirBnB"});
 });
 
+/**
+ * @swagger
+ * /user/registration:
+ *  post:
+ *      description: Register a user by posting user details using body parameters
+ *      parameters:
+ *          -   in: body
+ *              name: body
+ *              description: body object with user details to register
+ *              schema:
+ *                  $ref: "#/definitions/registerUser"
+ *      responses:
+ *          200:
+ *              description: OK
+ *          400: 
+ *              description: Errors in submitted fields. Check response body for more details
+ *          401:
+ *              description: Account already Exists
+ *          500:
+ *              description: Internal server error
+ */
 router.post("/registration", (req, res) => {
     UserRegistration.userValidation(req, res);
-    });
+});
 
 router.get("/login", (req, res) =>{
     res.render("general/login", {title: "login-AirBnB"});
 });
+
 router.post("/login", (req, res) =>{
     LoginValidation.loginValidation(req, res);
 });
