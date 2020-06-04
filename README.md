@@ -27,6 +27,11 @@ Install the by running:
         MONGO_DB_CONNECTION_STRING={YourKey}
 5. run the code - node app
 
+API Docs - powered by Swagger
+----------
+
+https://airbnb-kunal.herokuapp.com/api-docs
+
 Contribute
 ----------
 
