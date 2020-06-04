@@ -4,7 +4,7 @@ const searchRooms = {
             location: {
                 type: String,
                 example: "All",
-                default: "All"
+                enum: ["Toronto", "Vancouver", "Ottawa"]
             },
             checkIn: {
                 type: String,
@@ -22,6 +22,38 @@ const searchRooms = {
     }
 }
 
+const registerUser = {
+    registerUser: {
+        properties: {
+            email: {
+                type: String,
+                example: "kunaldhawan0212@gmail.com",
+            },
+            firstName: {
+                type: String,
+                example: "Kunal"
+            },
+            lastName: {
+                type: String,
+                example: "Dhawan"
+            },
+            phoneNo: {
+                type: Number,
+                example: "6479983500"
+            },
+            password: {
+                type: String,
+                example: ""
+            },
+            verifyPassword: {
+                type: String,
+                example: ""
+            }
+        }
+    }
+}
+
 module.exports = {
-    searchRooms : searchRooms
+    searchRooms : searchRooms,
+    registerUser: registerUser
 }

@@ -6,6 +6,8 @@ const client = require('twilio')(process.env.TWILIO_SID, process.env.TWILIO_TOKE
 
 const userModel = require('../models/User');
 
+const {getErrorListFromObject} = require('./functionality/general');
+
 const registration = {
 
     sendMessage(name){
@@ -58,7 +60,8 @@ const registration = {
         return re.test(name);
     },
 
-    storeData(user, res){
+    storeData(req, res){
+        const user = req.body
         const newUserInfo = {
             FirstName : user.firstName,
             LastName : user.lastName,
@@ -73,14 +76,25 @@ const registration = {
         .then(()=>{
             this.sendEmail(user.firstName, user.email, res);
             this.sendMessage(user.firstName, res);
-            res.redirect("/user/login");
+            if(req.headers.referer.includes('api-docs'))
+                res.send("User Registered Successfully");
+            else
+                res.redirect("/user/login");
         })
         .catch(err => {
             const errors = {UnexpectedErrors : "Account already exists, Matched Fields\n" + JSON.stringify(err.keyValue)}
-            res.render("general/registration", {
-                errorMessages : errors,
-                userData: user
-            });
+            if(req.headers.referer.includes('api-docs')){
+                res.statusMessage = "Account already exists";
+                res.status(400);
+                res.send(errors);
+            }
+            else{
+                
+                res.render("general/registration", {
+                    errorMessages : errors,
+                    userData: user
+                });
+            }
         }) 
     },
 
@@ -125,13 +139,22 @@ const registration = {
         }
 
         if(Object.keys(errors).length > 0){
-            res.render("general/registration", {
-                errorMessages : errors,
-                userData: req.body
-            });
+
+            // if request is geneerated by Swagger, return only response otherwise render the page
+            if(req.headers.referer.includes('api-docs')){
+                res.statusMessage = "Invalid fields submitted";
+                res.status(400);
+                res.send(getErrorListFromObject(errors));
+            }
+            else{
+                res.render("general/registration", {
+                    errorMessages : errors,
+                    userData: req.body
+                });
+            }   
         }
         else{
-            this.storeData(req.body, res);
+            this.storeData(req,res);
         }
     }
 }

@@ -14,12 +14,8 @@ require('dotenv').config({path:"./config/keys.env"})
 const app = express();
 const port = process.env.PORT || 3000;
 
-
-
 const swaggerDocs = swaggerJSDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
-
-
 
 app.use(fileUpload());
 

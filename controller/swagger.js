@@ -1,4 +1,4 @@
-const {searchRooms} = require("../models/Swagger");
+const {searchRooms, registerUser} = require("../models/Swagger");
 const swaggerDefinition = {
     info: {
         // API informations (required)
@@ -9,10 +9,11 @@ const swaggerDefinition = {
             name: "Kunal Dhawan",
             email: "kunaldhawan0212@gmail.com"
         },
-        servers: ["http://localhost:3000"]
+        servers: ["http://localhost:3000", "https://airbnb-kunal.herokuapp.com"]
     },
     definitions:{
-        ...searchRooms
+        ...searchRooms,
+        ...registerUser
     }
 };
 

@@ -45,7 +45,18 @@ const validateBookingDates = (from, to) => {
     return errorMsg;
 }
 
-module.exports.stringToHTML = stringToHTML;
-module.exports.trimFields = trimFields;
-module.exports.validateBookingDates = validateBookingDates;
-module.exports.getLocalTodayDate = getLocalTodayDate;
+const getErrorListFromObject = errors => {
+    let msg = "";
+    for(const key in errors){
+        msg += errors[key] + "\n";
+    }
+    return msg;
+}
+
+module.exports = {
+    stringToHTML: stringToHTML,
+    trimFields: trimFields,
+    validateBookingDates: validateBookingDates,
+    getLocalTodayDate: getLocalTodayDate,
+    getErrorListFromObject: getErrorListFromObject
+}

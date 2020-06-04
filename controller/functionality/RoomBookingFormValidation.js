@@ -1,8 +1,9 @@
 const rooms = require('../roomListing');
 const {validateBookingDates}  = require('./general');
 const {findOneRoomAndRender, updateRoomReservation} = require('../roomDBLogic');
-const validateRoomBookingForm = (req, res) => {
+const {getErrorListFromObject} = require('./general');
 
+const validateRoomBookingForm = (req, res) => {
     const errors = {};
 
     const checkInDate = req.body.checkIn;
@@ -16,6 +17,10 @@ const validateRoomBookingForm = (req, res) => {
         errors.invalidGuests = "Please select number of guests";
     }
 
+    if(parseInt(req.body.guestCount) <=0){
+        errors.invalidGuests = "Guest count should be atleast 1";
+    }
+
     return errors;
 }
 
@@ -24,11 +29,18 @@ const searchValidation = (req, res, toRenderOnError) =>{
     const errors = validateRoomBookingForm(req, res);
     
     if(Object.keys(errors).length > 0){
-        res.render(toRenderOnError, {
-            errorMessages : errors,
-            userData: req.body,
-            featuredRooms: rooms.getFeaturedRooms()
-        });
+        if(req.headers.referer.includes('api-docs')){
+            res.statusMessage = "Invalid fields submitted";
+            res.status(400);
+            res.send(getErrorListFromObject(errors));
+        }
+        else{
+            res.render(toRenderOnError, {
+                errorMessages : errors,
+                userData: req.body,
+                featuredRooms: rooms.getFeaturedRooms()
+            });
+        }
     }
     else{
         // rooms.getRoomsByLocation(req, res)
