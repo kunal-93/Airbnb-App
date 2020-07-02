@@ -43,6 +43,11 @@ div{
     z-index: 20;
     /* margin: 0; */
 }
+.logo-div{
+    display: flex;
+    align-items: center;
+    color: white;
+}
 
 .logo{
     width: 4em;
