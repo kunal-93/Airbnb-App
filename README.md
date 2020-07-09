@@ -17,13 +17,13 @@ Airbnb clone app is a modern room booking application that allows users to book 
 - *Back End*: Node, Express, MongoDB on the cloud, SendGrid for Emails, Twilio for text messaging
 - *Live API Documentation*: Swagger
 
-# Authors
+# Author
 
 [Kunal Dhawan](https://github.com/kunal-93)
 
 # Features
-
-- Admin Login - Has access to add, update, remove a room.
+- Session Management
+- Admin Login - Has access to add, update, remove a room
 - User Registration
 - User Login
 - Room Booking
