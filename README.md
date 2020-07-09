@@ -6,7 +6,7 @@ Airbnb-App Clone
 - [Author](#authors)
 - [Features](#features)
 - [Screenshots](#screenshots)
-- [Live Documenation](#documentation)
+- [Live Documentation](#documentation)
 
 # About
 
@@ -28,7 +28,7 @@ Airbnb clone app is a modern room booking application that allows users to book 
 - User Login
 - Room Booking
 - Welcome Email after registration
-- Live API documenation by swagger
+- Live API documentation by swagger
 
 # Screenshots
 ## Registration
@@ -56,7 +56,7 @@ Airbnb clone app is a modern room booking application that allows users to book 
 ![Book room feature](./screenshots/book-room.png)
 
 ## Update room by admin
-![Update Room](./screeshots/room-edit-admin.png)
+![Update Room](./screenshots/room-edit-admin.png)
 
 ## Responsive Design
 ![Responsive design](./screenshots/responsive-design.png)
